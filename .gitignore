@@ -1,0 +1,15 @@
+dist/*
+bpython.egg-info/*
+*.pyc
+tags
+_trial_temp
+*.mo
+build/*
+env
+.DS_Store
+.idea/
+doc/sphinx/build/*
+bpython/_version.py
+venv/
+.venv/
+.mypy_cache/

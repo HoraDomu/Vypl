@@ -1,0 +1,127 @@
+import sys
+from codeop import CommandCompiler
+from typing import Any
+from collections.abc import Iterable
+
+from pygments.token import Generic, Token, Keyword, Name, Comment, String
+from pygments.token import Error, Literal, Number, Operator, Punctuation
+from pygments.token import Whitespace, _TokenType
+from pygments.formatter import Formatter
+from pygments.lexers import get_lexer_by_name
+from curtsies.formatstring import FmtStr
+
+from ..curtsiesfrontend.parse import parse
+from ..repl import Interpreter as ReplInterpreter
+
+default_colors = {
+    Generic.Error: "R",
+    Keyword: "d",
+    Name: "c",
+    Name.Builtin: "g",
+    Comment: "b",
+    String: "m",
+    Error: "r",
+    Literal: "d",
+    Number: "M",
+    Number.Integer: "d",
+    Operator: "d",
+    Punctuation: "d",
+    Token: "d",
+    Whitespace: "d",
+    Token.Punctuation.Parenthesis: "R",
+    Name.Function: "d",
+    Name.Class: "d",
+}
+
+class VyplFormatter(Formatter):
+    """This is subclassed from the custom formatter for vypl.  Its format()
+    method receives the tokensource and outfile params passed to it from the
+    Pygments highlight() method and slops them into the appropriate format
+    string as defined above, then writes to the outfile object the final
+    formatted string. This does not write real strings. It writes format string
+    (FmtStr) objects.
+
+    See the Pygments source for more info; it's pretty
+    straightforward."""
+
+    def __init__(
+        self,
+        color_scheme: dict[_TokenType, str],
+        **options: str | bool | None,
+    ) -> None:
+        self.f_strings = {k: f"\x01{v}" for k, v in color_scheme.items()}
+        super().__init__(**options)
+
+    def format(self, tokensource, outfile):
+        o = ""
+
+        for token, text in tokensource:
+            while token not in self.f_strings:
+                token = token.parent
+            o += f"{self.f_strings[token]}\x03{text}\x04"
+        outfile.write(parse(o.rstrip()))
+
+class Interp(ReplInterpreter):
+    def __init__(
+        self,
+        locals: dict[str, Any] | None = None,
+    ) -> None:
+        """Constructor.
+
+        We include an argument for the outfile to pass to the formatter for it
+        to write to.
+        """
+        super().__init__(locals)
+
+        def write(err_line: str | FmtStr) -> None:
+            """Default stderr handler for tracebacks
+
+            Accepts FmtStrs so interpreters can output them"""
+            sys.stderr.write(str(err_line))
+
+        self.write = write
+        self.outfile = self
+
+    def writetb(self, lines: Iterable[str]) -> None:
+        tbtext = "".join(lines)
+        lexer = get_lexer_by_name("pytb")
+        self.format(tbtext, lexer)
+
+    def format(self, tbtext: str, lexer: Any) -> None:
+        traceback_informative_formatter = VyplFormatter(default_colors)
+        traceback_code_formatter = VyplFormatter({Token: "d"})
+
+        no_format_mode = False
+        cur_line = []
+        for token, text in lexer.get_tokens(tbtext):
+            if text.endswith("\n"):
+                cur_line.append((token, text))
+                if no_format_mode:
+                    traceback_code_formatter.format(cur_line, self.outfile)
+                    no_format_mode = False
+                else:
+                    traceback_informative_formatter.format(
+                        cur_line, self.outfile
+                    )
+                cur_line = []
+            elif text == "    " and len(cur_line) == 0:
+                no_format_mode = True
+                cur_line.append((token, text))
+            else:
+                cur_line.append((token, text))
+        assert cur_line == [], cur_line
+
+def code_finished_will_parse(
+    s: str, compiler: CommandCompiler
+) -> tuple[bool, bool]:
+    """Returns a tuple of whether the buffer could be complete and whether it
+    will parse
+
+    True, True means code block is finished and no predicted parse error
+    True, False means code block is finished because a parse error is predicted
+    False, True means code block is unfinished
+    False, False isn't possible - an predicted error makes code block done"""
+    try:
+        return bool(compiler(s)), True
+    except (ValueError, SyntaxError, OverflowError):
+        return True, False

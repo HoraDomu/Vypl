@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: Build & verify (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install build tools
+        run: pip install build
+
+      - name: Build wheel and sdist
+        run: python -m build
+
+      - name: Install from built wheel
+        run: pip install dist/*.whl
+
+      - name: Verify package imports and version
+        run: |
+          python -c "import vypl; print('vypl version:', vypl.__version__)"
+          python -c "from vypl.args import version_banner; print(version_banner())"
+          python -c "from vypl.config import Config, get_config_home; print('config home:', get_config_home())"
+          python -c "from vypl.autocomplete import AutocompleteModes; print('autocomplete ok')"
+          python -c "from vypl.translations import _; print('translations ok')"

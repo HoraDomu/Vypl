@@ -1,14 +1,14 @@
 <div align="center">
 
-<img src="https://img.shields.io/badge/VYPL-A%20Python%20REPL%20with%20Vim%20Keybinds-00ff00?style=for-the-badge&labelColor=000000&color=000000" alt="Vypl" />
+<img src="https://img.shields.io/badge/VYPL-A%20Python%20REPL%20with%20Vim%20Keybinds-white?style=for-the-badge&labelColor=0d1117&color=2f81f7" alt="Vypl" />
 
 <h3>A Python REPL with Vim Keybinds</h3>
 
 <p>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Vypl-00ff00?style=flat-square&labelColor=111111" alt="License" /></a>
-  <img src="https://img.shields.io/badge/python-3.11+-00ff00?style=flat-square&labelColor=111111" alt="Python 3.11+" />
-  <img src="https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20WSL-00ff00?style=flat-square&labelColor=111111" alt="Platform" />
-  <a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000?style=flat-square&labelColor=111111" alt="Code style: black" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Vypl-2f81f7?style=flat-square&labelColor=0d1117" alt="License" /></a>
+  <img src="https://img.shields.io/badge/python-3.11+-2f81f7?style=flat-square&labelColor=0d1117" alt="Python 3.11+" />
+  <img src="https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20WSL-2f81f7?style=flat-square&labelColor=0d1117" alt="Platform" />
+  <a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000?style=flat-square&labelColor=0d1117" alt="Code style: black" /></a>
 </p>
 
 </div>

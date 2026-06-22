@@ -15,7 +15,7 @@
 
 ---
 
-Vypl is a terminal Python REPL built around the idea that your editor keybinds shouldn't disappear the moment you open an interactive session. It runs in the terminal, gives you a real Python environment with syntax highlighting and smart autocompletion, and is being built to work the way Vim users think — modal, keyboard-driven, and fast.
+Vypl is a terminal Python REPL built around the idea that your editor keybinds shouldn't disappear the moment you open an interactive session. It runs in the terminal, gives you a real Python environment with syntax highlighting and smart autocompletion, and is being built to work the way Vim users think modal, keyboard-driven, and fast.
 
 ## Features
 
@@ -73,4 +73,4 @@ Vypl requires a Unix terminal. On Windows, run it inside WSL.
 
 ## Contributing
 
-See [LICENSE](LICENSE) — contributions are welcome, attribution is required, and modifications must be contributed back.
+See [LICENSE](LICENSE) contributions are welcome, attribution is required, and modifications must be contributed back.

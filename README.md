@@ -54,13 +54,9 @@ pip install -e .
 ```bash
 vypl
 ```
-## Configuration
-
-Vypl reads its config from `~/.config/vypl/config`. Themes live in the same directory. A default config will be generated on first run.
-
 ## Platform
 
-Vypl requires a Unix terminal. On Windows, run it inside WSL.
+Vypl requires a Unix terminal. On Windows, run it inside WSL, or Docker. 
 
 ## Contributing
 

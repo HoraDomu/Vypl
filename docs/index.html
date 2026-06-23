@@ -1,208 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vypl</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vypl</title>
 
-    body {
-      background: #0d0d0d;
-      color: #33ff33;
-      font-family: 'Courier New', Courier, monospace;
-      font-size: 15px;
-      line-height: 1.75;
-      padding: 4rem 1.5rem;
-      max-width: 700px;
-      margin: 0 auto;
-    }
+<style>
+body {
+    max-width: 700px;
+    margin: 60px auto;
+    padding: 0 20px;
+    background: white;
+    color: black;
+    font-family: Georgia, "Times New Roman", serif;
+    line-height: 1.7;
+    font-size: 18px;
+}
 
-    h1 {
-      font-size: 2.25rem;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.2rem;
-    }
+h1 {
+    font-size: 32px;
+    font-weight: normal;
+    margin-bottom: 4px;
+}
 
-    h2 {
-      font-size: 0.85rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #66ff66;
-      margin: 2.75rem 0 0.75rem;
-    }
+.subtitle {
+    color: #666;
+    margin-bottom: 40px;
+}
 
-    p {
-      color: #99ee99;
-      margin-bottom: 0.9rem;
-    }
+h2 {
+    font-size: 22px;
+    font-weight: normal;
+    margin-top: 40px;
+    margin-bottom: 12px;
+}
 
-    pre {
-      background: #111;
-      border: 1px solid #1c4a1c;
-      border-radius: 3px;
-      padding: 1rem 1.25rem;
-      margin: 0.5rem 0 1.25rem;
-      overflow-x: auto;
-      color: #33ff33;
-    }
+code {
+    font-family: Consolas, monospace;
+    font-size: 16px;
+}
 
-    code {
-      background: #111;
-      border: 1px solid #1c4a1c;
-      border-radius: 2px;
-      padding: 0.1em 0.35em;
-      font-family: inherit;
-      font-size: 0.9em;
-      color: #33ff33;
-    }
-
-    pre code {
-      background: none;
-      border: none;
-      padding: 0;
-      font-size: inherit;
-    }
-
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      margin: 0.5rem 0 1.25rem;
-    }
-
-    td, th {
-      padding: 0.35rem 0.75rem;
-      border: 1px solid #1c4a1c;
-      color: #99ee99;
-      text-align: left;
-    }
-
-    th {
-      color: #66ff66;
-      font-weight: normal;
-    }
-
-    td:first-child {
-      color: #33ff33;
-      white-space: nowrap;
-    }
-
-    a { color: #66ff66; text-decoration: none; }
-    a:hover { color: #ffffff; }
-
-    hr {
-      border: none;
-      border-top: 1px solid #1c4a1c;
-      margin: 2.5rem 0;
-    }
-
-    .sub { color: #4d994d; font-size: 0.9rem; margin-bottom: 1.5rem; }
-
-    .badges { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0 2rem; }
-    .badges img { height: 20px; }
-  </style>
+a {
+    color: black;
+}
+</style>
 </head>
+
 <body>
 
-  <h1>Vypl</h1>
-  <p class="sub">A Python REPL with Vim keybinds.</p>
+<h1>Vypl</h1>
+<p class="subtitle">A Python REPL with Vim keybinds.</p>
 
-  <div class="badges">
-    <a href="https://github.com/HoraDomu/Vypl/blob/main/LICENSE">
-      <img src="https://img.shields.io/badge/license-GPL--3.0-2f81f7?style=flat-square&labelColor=0d1117" alt="GPL-3.0">
-    </a>
-    <img src="https://img.shields.io/badge/python-3.11+-2f81f7?style=flat-square&labelColor=0d1117" alt="Python 3.11+">
-    <img src="https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20WSL-2f81f7?style=flat-square&labelColor=0d1117" alt="Platform">
-    <a href="https://codecov.io/github/HoraDomu/Vypl">
-      <img src="https://codecov.io/github/HoraDomu/Vypl/graph/badge.svg?token=S21MLJFZ19" alt="Coverage">
-    </a>
-  </div>
+<p>
+Vypl is an interactive Python shell designed for people who spend most of
+their time in Vim. It combines Python development with familiar Vim-style
+editing, navigation, and command workflows inside the REPL.
+</p>
 
-  <p>
-    Vypl is a terminal Python REPL built for Vim users. It gives you syntax highlighting,
-    smart autocompletion, and full modal editing — without losing your muscle memory the
-    moment you open an interactive session.
-  </p>
-  <p>
-    Normal mode, motions, operators, named registers, and ex commands.
-    All inside the REPL.
-  </p>
+<p>
+The goal is simple: provide a Python prompt that feels natural to Vim users.
+Instead of switching mental models when entering a REPL, you keep the same
+motions, commands, and editing habits you already use every day.
+</p>
 
-  <hr>
+<h2>Install</h2>
 
-  <h2>Install</h2>
+<p>
+<code>pip install vypl</code>
+</p>
 
-  <pre><code>pip install vypl</code></pre>
+<p>
+Or install from source:
+</p>
 
-  <p>Or from source:</p>
+<p>
+<code>git clone https://github.com/HoraDomu/Vypl</code><br>
+<code>cd Vypl</code><br>
+<code>pip install -e .</code>
+</p>
 
-  <pre><code>git clone https://github.com/HoraDomu/Vypl
-cd Vypl
-pip install -e .</code></pre>
+<h2>Run</h2>
 
-  <h2>Run</h2>
+<p>
+<code>vypl</code>
+</p>
 
-  <pre><code>vypl</code></pre>
+<h2>Features</h2>
 
-  <hr>
+<p>
+• Vim-style modal editing<br>
+• Normal and insert modes<br>
+• Vim motions and operators<br>
+• Named registers<br>
+• Ex commands<br>
+• Syntax highlighting<br>
+• Python autocompletion
+</p>
 
-  <h2>Vim Keybinds</h2>
+<h2>Project</h2>
 
-  <p>Press <code>ESC</code> to enter normal mode.</p>
-
-  <table>
-    <tr><th>Key</th><th>Action</th></tr>
-    <tr><td>ESC</td><td>Normal mode</td></tr>
-    <tr><td>i / a / A / I</td><td>Insert mode</td></tr>
-    <tr><td>h j k l</td><td>Move / navigate history</td></tr>
-    <tr><td>w b e</td><td>Word motions</td></tr>
-    <tr><td>0 $</td><td>Line start / end</td></tr>
-    <tr><td>x</td><td>Delete char under cursor</td></tr>
-    <tr><td>d c y + motion</td><td>Delete / change / yank</td></tr>
-    <tr><td>dd cc yy</td><td>Operate on whole line</td></tr>
-    <tr><td>p P</td><td>Paste after / before cursor</td></tr>
-    <tr><td>"a … "z</td><td>Named registers</td></tr>
-    <tr><td>K</td><td>Inspect symbol under cursor</td></tr>
-    <tr><td>.</td><td>Re-run last expression</td></tr>
-    <tr><td>u</td><td>Undo</td></tr>
-  </table>
-
-  <h2>Ex Commands</h2>
-
-  <p>Type <code>:</code> in normal mode.</p>
-
-  <table>
-    <tr><th>Command</th><th>Action</th></tr>
-    <tr><td>:w [file]</td><td>Save session to file</td></tr>
-    <tr><td>:r file.py</td><td>Load and run a Python file</td></tr>
-    <tr><td>:s/old/new/</td><td>Substitute in current line</td></tr>
-    <tr><td>:s/old/new/g</td><td>Substitute all occurrences</td></tr>
-    <tr><td>:history</td><td>Search command history</td></tr>
-    <tr><td>:clear</td><td>Clear the screen</td></tr>
-  </table>
-
-  <hr>
-
-  <h2>Windows — Docker</h2>
-
-  <p>Vypl requires a Unix terminal. On Windows, run it with Docker:</p>
-
-  <pre><code>git clone https://github.com/HoraDomu/Vypl
-cd Vypl
-docker build -t vypl .
-docker run -it vypl</code></pre>
-
-  <p>You can also pull and build in one step:</p>
-
-  <pre><code>docker build -t vypl https://github.com/HoraDomu/Vypl.git
-docker run -it vypl</code></pre>
-
-  <hr>
-
-  <p class="sub">
-    <a href="https://github.com/HoraDomu/Vypl">github.com/HoraDomu/Vypl</a>
-    &mdash; GPL v3
-  </p>
+<p>
+Source code:
+<a href="https://github.com/HoraDomu/Vypl">
+github.com/HoraDomu/Vypl
+</a>
+</p>
 
 </body>
 </html>

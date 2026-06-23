@@ -19,7 +19,7 @@
 
 ---
 
-Vypl is a terminal Python REPL built for Vim users. It gives you a real Python environment with syntax highlighting, smart autocompletion, and full modal editing — normal mode, motions, operators, named registers, and ex commands, all inside the REPL.
+Vypl is a terminal Python REPL built for Vim users. It gives you a real Python environment with syntax highlighting, smart autocompletion, and full modal editing normal mode, motions, operators, named registers, and ex commands, all inside the REPL.
 
 ## Install
 
@@ -61,7 +61,7 @@ Press `ESC` to enter normal mode. Press `i`, `a`, `A`, or `I` to return to inser
 | `[count]op[count]motion` | e.g. `3dd`, `d3w`, `2x` |
 | `p` `P` | Paste after / before cursor |
 | `"a` … `"z` | Named registers |
-| `v` | Visual mode — then `d` / `y` / `c` |
+| `v` | Visual mode then `d` / `y` / `c` |
 | `o` / `O` | Open new line below / above |
 | `gg` / `G` | Jump to first / last line in buffer |
 | `K` | Inspect symbol under cursor |
@@ -114,7 +114,7 @@ docker run -it vypl
 
 ## Contributing
 
-Contributions are welcome. Open an issue or pull request on [GitHub](https://github.com/HoraDomu/Vypl). Vypl is licensed under GPL v3 — contributions must remain open source.
+Contributions are welcome. Open an issue or pull request on [GitHub](https://github.com/HoraDomu/Vypl). Vypl is licensed under GPL v3 contributions must remain open source.
 
 ## Special Thanks
 

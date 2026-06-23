@@ -139,13 +139,6 @@ class FakeStdin:
             self.cursor_offset, self.current_line = self.rl_char_sequences[e](
                 self.cursor_offset, self.current_line
             )
-        elif e == "<Ctrl-d>":
-            if not len(self.current_line):
-                self.repl.send_to_stdin("\n")
-                self.has_focus = False
-                self.current_line = ""
-                self.cursor_offset = 0
-                self.repl.run_code_and_maybe_finish(for_code="")
         elif e in ("\n", "\r", "<Ctrl-j>", "<Ctrl-m>"):
             line = f"{self.current_line}\n"
             self.repl.send_to_stdin(line)
@@ -635,8 +628,7 @@ class BaseRepl(Repl):
             self.stdin.process_event(e)
 
         elif isinstance(e, events.SigIntEvent):
-            logger.debug("received sigint event")
-            self.keyboard_interrupt()
+            pass
 
         elif isinstance(e, vyplevents.ReloadEvent):
             if self.watching_files:
@@ -676,7 +668,7 @@ class BaseRepl(Repl):
         elif e in ("<DOWN>",) + key_dispatch[self.config.down_one_line_key]:
             self.down_one_line()
         elif e == "<Ctrl-d>":
-            self.on_control_d()
+            pass
         elif e == "<Ctrl-o>":
             self.operate_and_get_next()
         elif e == "<Esc+.>":
@@ -942,15 +934,6 @@ class BaseRepl(Repl):
         if completion_end in CHARACTER_PAIR_MAP:
             completion = f"{completion}{CHARACTER_PAIR_MAP[completion_end]}"
         return completion
-
-    def on_control_d(self):
-        if self.current_line == "":
-            raise SystemExit()
-        else:
-            self.current_line = (
-                self.current_line[: self.cursor_offset]
-                + self.current_line[(self.cursor_offset + 1) :]
-            )
 
     def cut_to_buffer(self):
         self.cut_buffer = self.current_line[self.cursor_offset :]

@@ -103,7 +103,7 @@ docker run -it vypl
 
 ## Contributing
 
-Issues and PRs welcome[github.com/HoraDomu/Vypl](https://github.com/HoraDomu/Vypl). GPL v3keep it open.
+Issues and PRs welcome -> [github.com/HoraDomu/Vypl](https://github.com/HoraDomu/Vypl). GPL v3keep it open.
 
 ## Credits
 

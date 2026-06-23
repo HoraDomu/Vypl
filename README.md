@@ -5,7 +5,7 @@
 <h3>A Python REPL with Vim Keybinds</h3>
 
 <p>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Vypl-2f81f7?style=flat-square&labelColor=0d1117" alt="License" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-2f81f7?style=flat-square&labelColor=0d1117" alt="License" /></a>
   <img src="https://img.shields.io/badge/python-3.11+-2f81f7?style=flat-square&labelColor=0d1117" alt="Python 3.11+" />
   <img src="https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20WSL-2f81f7?style=flat-square&labelColor=0d1117" alt="Platform" />
   <a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000?style=flat-square&labelColor=0d1117" alt="Code style: black" /></a>

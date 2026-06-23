@@ -107,10 +107,6 @@ class Config:
             "hist_file": "~/.pythonhist",
             "hist_length": 1000,
             "paste_time": 0.02,
-            "pastebin_confirm": True,
-            "pastebin_expiry": "1week",
-            "pastebin_helper": "",
-            "pastebin_url": "https://bpaste.net",
             "save_append_py": False,
             "single_undo_time": 1.0,
             "syntax": True,
@@ -137,7 +133,6 @@ class Config:
             "incremental_search": "M-s",
             "last_output": "F9",
             "left": "C-b",
-            "pastebin": "F8",
             "redo": "C-g",
             "reimport": "F6",
             "reverse_incremental_search": "M-r",
@@ -227,7 +222,6 @@ class Config:
             "general", "import_completion_skiplist"
         ).split(":")
 
-        self.pastebin_key = get_key_no_doublebind("pastebin")
         self.copy_clipboard_key = get_key_no_doublebind("copy_clipboard")
         self.save_key = get_key_no_doublebind("save")
         self.search_key = get_key_no_doublebind("search")
@@ -266,11 +260,6 @@ class Config:
         )
         self.external_editor_key = get_key_no_doublebind("external_editor")
         self.help_key = get_key_no_doublebind("help")
-
-        self.pastebin_confirm = config.getboolean("general", "pastebin_confirm")
-        self.pastebin_url = config.get("general", "pastebin_url")
-        self.pastebin_expiry = config.get("general", "pastebin_expiry")
-        self.pastebin_helper = config.get("general", "pastebin_helper")
 
         self.cli_suggestion_width = config.getfloat("cli", "suggestion_width")
         self.cli_trim_prompts = config.getboolean("cli", "trim_prompts")

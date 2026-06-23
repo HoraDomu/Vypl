@@ -725,8 +725,6 @@ class BaseRepl(Repl):
             self.redo()
         elif e in key_dispatch[self.config.save_key]:
             greenlet.greenlet(self.write2file).switch()
-        elif e in key_dispatch[self.config.pastebin_key]:
-            greenlet.greenlet(self.pastebin).switch()
         elif e in key_dispatch[self.config.copy_clipboard_key]:
             greenlet.greenlet(self.copy2clipboard).switch()
         elif e in key_dispatch[self.config.external_editor_key]:
@@ -2001,7 +1999,7 @@ Please report issues at https://github.com/dommcpro/Vypl/issues
 Features:
 Try using undo ({config.undo_key})!
 Edit the current line ({config.edit_current_block_key}) or the entire session ({config.external_editor_key}) in an external editor. (currently {config.editor})
-Save sessions ({config.save_key}) or post them to pastebins ({config.pastebin_key})! Current pastebin helper: {config.pastebin_helper}
+Save sessions ({config.save_key}) to write your session to a file.
 Reload all modules and rerun session ({config.reimport_key}) to test out changes to a module.
 Toggle auto-reload mode ({config.toggle_file_watch_key}) to re-execute the current session when a module you've imported is modified.
 
@@ -2009,7 +2007,6 @@ vypl -i your_script.py runs a file in interactive mode
 vypl -t your_script.py pastes the contents of a file into the session
 
 A config file at {config.config_path} customizes keys and behavior of vypl.
-You can also set which pastebin helper and which external editor to use.
 See {example_config_url} for an example config file.
 Press {config.edit_config_key} to edit this config file.
 """

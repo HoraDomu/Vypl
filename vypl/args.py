@@ -139,7 +139,6 @@ def parse(
     import cwcwidth
     import greenlet
     import pygments
-    import requests
     import xdg
 
     logger.info("Starting vypl %s", __version__)
@@ -154,7 +153,6 @@ def parse(
     log_version(greenlet, "greenlet")
     log_version(pygments, "pygments")
     log_version(xdg, "pyxdg")
-    log_version(requests, "requests")
 
     try:
         import pyperclip

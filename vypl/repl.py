@@ -39,7 +39,6 @@ from .formatter import Parenthesis
 from .history import History
 from .importcompletion import ModuleGatherer
 from .lazyre import LazyReCompile
-from .paste import PasteFailed, PasteHelper, PastePinnwand
 from .patch_linecache import filename_for_console_input
 from .translations import _, ngettext
 
@@ -450,11 +449,7 @@ class Repl(metaclass=abc.ABCMeta):
         self._C: dict[str, int] = {}
         self.prev_block_finished: int = 0
         self.interact: Interaction = NoInteraction(self.config)
-        self.prev_pastebin_content = ""
-        self.prev_pastebin_url = ""
-        self.prev_removal_url = ""
         self.closed = False
-        self.paster: PasteHelper | PastePinnwand
 
         if self.config.hist_file.exists():
             try:
@@ -471,14 +466,6 @@ class Repl(metaclass=abc.ABCMeta):
         self.completers = autocomplete.get_default_completer(
             config.autocomplete_mode, self.module_gatherer
         )
-        if self.config.pastebin_helper:
-            self.paster = PasteHelper(self.config.pastebin_helper)
-        else:
-            self.paster = PastePinnwand(
-                self.config.pastebin_url,
-                self.config.pastebin_expiry,
-            )
-
     @property
     def ps1(self) -> str:
         if hasattr(sys, "ps1"):
@@ -861,52 +848,6 @@ class Repl(metaclass=abc.ABCMeta):
             self.interact.notify(_("Could not copy to clipboard."))
         else:
             self.interact.notify(_("Copied content to clipboard."))
-
-    def pastebin(self, s: str | None = None) -> str | None:
-        """Upload to a pastebin and display the URL in the status bar."""
-
-        if s is None:
-            s = self.getstdout()
-
-        if self.config.pastebin_confirm and not self.interact.confirm(
-            _("Pastebin buffer? (y/N) ")
-        ):
-            self.interact.notify(_("Pastebin aborted."))
-            return None
-        else:
-            return self.do_pastebin(s)
-
-    def do_pastebin(self, s: str) -> str | None:
-        """Actually perform the upload."""
-        if s == self.prev_pastebin_content:
-            self.interact.notify(
-                _("Duplicate pastebin. Previous URL: %s. " "Removal URL: %s")
-                % (self.prev_pastebin_url, self.prev_removal_url),
-                10,
-            )
-            return self.prev_pastebin_url
-
-        self.interact.notify(_("Posting data to pastebin..."))
-        try:
-            paste_url, removal_url = self.paster.paste(s)
-        except PasteFailed as e:
-            self.interact.notify(_("Upload failed: %s") % e)
-            return None
-
-        self.prev_pastebin_content = s
-        self.prev_pastebin_url = paste_url
-        self.prev_removal_url = removal_url if removal_url is not None else ""
-
-        if removal_url is not None:
-            self.interact.notify(
-                _("Pastebin URL: %s - Removal URL: %s")
-                % (paste_url, removal_url),
-                10,
-            )
-        else:
-            self.interact.notify(_("Pastebin URL: %s") % (paste_url,), 10)
-
-        return paste_url
 
     def push(self, line: str, insert_into_history: bool = True) -> bool:
         """Push a line of code onto the buffer so it can process it all

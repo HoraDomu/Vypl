@@ -70,6 +70,27 @@ Type `:` in normal mode to enter command mode.
 | `:history` | Search command history |
 | `:clear` | Clear the screen |
 
+## Roadmap
+
+### Next up
+| Feature | Description |
+|---|---|
+| Count prefixes | `3dd`, `5j`, `2w` — repeat any motion or operator |
+| `gg` / `G` | Jump to first / last line in multi-line buffer |
+| `f` / `F` | Find character forward / backward on current line |
+| `r` | Replace single character under cursor |
+| `o` / `O` | Open new line below / above in multi-line buffer |
+
+### Planned
+| Feature | Description |
+|---|---|
+| Visual mode | `v` to select, then `d` / `y` / `c` on selection |
+| Text objects | `ci"`, `di(`, `yi[` — operate inside delimiters |
+| Macro recording | `q{a-z}` to record, `@{a-z}` to replay |
+| `/` search | Search REPL history like Vim's `/` |
+
+Open to contributions on any of the above — see [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Platform
 
 Vypl requires a Unix terminal. On Linux and macOS, it runs natively. On Windows, use WSL or Docker.

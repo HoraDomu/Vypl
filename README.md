@@ -15,6 +15,12 @@
 
 ---
 
+<div align="center">
+  <img src="assets/demo.gif" alt="Vypl demo" width="700" />
+</div>
+
+---
+
 Vypl is a terminal Python REPL built for Vim users. It gives you a real Python environment with syntax highlighting, smart autocompletion, and full modal editing — normal mode, motions, operators, named registers, and ex commands, all inside the REPL.
 
 ## Install

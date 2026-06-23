@@ -3,8 +3,8 @@ requires = ["setuptools >= 62.4.0", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
-write_to = "vypl/_version.py"
-fallback_version = "0.1.0"
+version_file = "vypl/_version.py"
+fallback_version = "0.6.3"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

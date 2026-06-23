@@ -21,7 +21,7 @@
 
 ---
 
-Vypl is a terminal Python REPL built for Vim users. It gives you a real Python environment with syntax highlighting, smart autocompletion, and full modal editing — normal mode, motions, operators, named registers, and ex commands, all inside the REPL.
+Vypl is a terminal Python REPL built for Vim users. It gives you a real Python environment with syntax highlighting, smart autocompletion, and full modal editingnormal mode, motions, operators, named registers, and ex commands, all inside the REPL.
 
 ## Install
 
@@ -81,7 +81,7 @@ Type `:` in normal mode to enter command mode.
 ### Next up
 | Feature | Description |
 |---|---|
-| Count prefixes | `3dd`, `5j`, `2w` — repeat any motion or operator |
+| Count prefixes | `3dd`, `5j`, `2w`repeat any motion or operator |
 | `gg` / `G` | Jump to first / last line in multi-line buffer |
 | `f` / `F` | Find character forward / backward on current line |
 | `r` | Replace single character under cursor |
@@ -91,11 +91,11 @@ Type `:` in normal mode to enter command mode.
 | Feature | Description |
 |---|---|
 | Visual mode | `v` to select, then `d` / `y` / `c` on selection |
-| Text objects | `ci"`, `di(`, `yi[` — operate inside delimiters |
+| Text objects | `ci"`, `di(`, `yi[`operate inside delimiters |
 | Macro recording | `q{a-z}` to record, `@{a-z}` to replay |
 | `/` search | Search REPL history like Vim's `/` |
 
-Open to contributions on any of the above — see [CONTRIBUTING.md](CONTRIBUTING.md).
+Open to contributions on any of the abovesee [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Platform
 
@@ -112,4 +112,4 @@ docker run -it vypl
 
 ## Contributing
 
-Contributions are welcome. Open an issue or pull request on [GitHub](https://github.com/HoraDomu/Vypl). Vypl is licensed under GPL v3 — contributions must remain open source.
+Contributions are welcome. Open an issue or pull request on [GitHub](https://github.com/HoraDomu/Vypl). Vypl is licensed under GPL v3contributions must remain open source.

@@ -110,6 +110,12 @@ docker build -t vypl .
 docker run -it vypl
 ```
 
+
 ## Contributing
 
 Contributions are welcome. Open an issue or pull request on [GitHub](https://github.com/HoraDomu/Vypl). Vypl is licensed under GPL v3contributions must remain open source.
+
+
+
+##Special Thank you!
+https://bpython-interpreter.org/ Gave me the inspiration, but over hundreds of loc I added later I have created,a more minimal, faster version with a vim style workflow, and docker file support. 

@@ -54,22 +54,9 @@ pip install -e .
 ```bash
 vypl
 ```
-
-Optional extras:
-
-```bash
-pip install vypl[jedi]       # better autocompletion
-pip install vypl[clipboard]  # system clipboard support
-pip install vypl[watch]      # auto-reload on file change
-```
-
-## Configuration
-
-Vypl reads its config from `~/.config/vypl/config`. Themes live in the same directory. A default config will be generated on first run.
-
 ## Platform
 
-Vypl requires a Unix terminal. On Windows, run it inside WSL.
+Vypl requires a Unix terminal. On Windows, run it inside WSL, or Docker. 
 
 ## Contributing
 

@@ -1,16 +1,21 @@
-Vypl License
-Copyright (c) 2026 dommcpro
+MIT License
 
-Permission is granted to use, copy, and run this software free of charge.
+Copyright (c) 2026 Dominick Yanez
 
-You may not:
-  - Claim this project or any part of it as your own work
-  - Sell this software or a modified version of it as your own product
-  - Distribute modified versions without contributing those changes back
-    to the original project at https://github.com/dommcpro/Vypl
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-You may contribute to this project. By submitting a contribution you agree
-that your changes become part of Vypl under these same terms and that you
-make no claim of ownership over the project as a whole.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-This software is provided as-is, without warranty of any kind.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

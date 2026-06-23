@@ -2,9 +2,10 @@ import curses
 import errno
 import os
 import pydoc
+import shlex
 import subprocess
 import sys
-import shlex
+
 
 def get_pager_command(default: str = "less -rf") -> list[str]:
     return shlex.split(os.environ.get("PAGER", default))

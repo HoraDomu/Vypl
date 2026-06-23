@@ -1,6 +1,7 @@
 import linecache
 from typing import Any
 
+
 class VyplLinecache(dict):
     """Replaces the cache dict in the standard-library linecache module,
     to also remember (in an unerasable way) vypl console input."""

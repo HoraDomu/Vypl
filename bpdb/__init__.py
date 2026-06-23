@@ -1,12 +1,13 @@
 import os
 import sys
 import traceback
+from optparse import OptionParser
+from pdb import Restart
 
 import vypl
 from vypl.args import version_banner
+
 from .debugger import BPdb
-from optparse import OptionParser
-from pdb import Restart
 
 __version__ = vypl.__version__
 
@@ -71,7 +72,7 @@ def main():
                 "The program exited via sys.exit(). Exit status: ",
             )
             print(sys.exc_info()[1])
-        except:
+        except Exception:
             traceback.print_exc()
             print("Uncaught exception. Entering post mortem debugging.")
             print("Running 'cont' or 'step' will restart the program.")

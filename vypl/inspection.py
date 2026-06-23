@@ -2,19 +2,20 @@ import inspect
 import keyword
 import pydoc
 import re
+from collections.abc import Callable
 from dataclasses import dataclass
+from types import MemberDescriptorType, TracebackType
 from typing import (
     Any,
     ContextManager,
     Literal,
 )
-from collections.abc import Callable
-from types import MemberDescriptorType, TracebackType
 
-from pygments.token import Token
 from pygments.lexers import Python3Lexer
+from pygments.token import Token
 
 from .lazyre import LazyReCompile
+
 
 class _Repr:
     """
@@ -210,7 +211,7 @@ def _getpydocspec(f: Callable) -> ArgSpec | None:
 def getfuncprops(func: str, f: Callable) -> FuncProps | None:
     try:
         func_name = getattr(f, "__name__", None)
-    except:
+    except Exception:
         func_name = None
 
     try:
@@ -219,7 +220,7 @@ def getfuncprops(func: str, f: Callable) -> FuncProps | None:
             or (func_name == "__init__" and not func.endswith(".__init__"))
             or (func_name == "__new__" and not func.endswith(".__new__"))
         )
-    except:
+    except Exception:
         return None
     try:
         argspec = _get_argspec_from_signature(f)

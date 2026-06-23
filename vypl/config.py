@@ -1,11 +1,12 @@
+import locale
 import os
 import sys
-import locale
+from collections.abc import Mapping, MutableMapping
 from configparser import ConfigParser
 from itertools import chain
 from pathlib import Path
-from typing import Any, Dict
-from collections.abc import MutableMapping, Mapping
+from typing import Any
+
 from xdg import BaseDirectory
 
 from .autocomplete import AutocompleteModes

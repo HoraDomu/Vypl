@@ -4,6 +4,7 @@ from typing import Literal
 
 from .. import _internal
 
+
 class NopPydocPager:
     def __enter__(self):
         self._orig_pager = pydoc.pager

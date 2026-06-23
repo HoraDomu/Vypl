@@ -4,13 +4,13 @@ import importlib.util
 import logging
 import os
 import sys
-from pathlib import Path
 from collections.abc import Callable
+from pathlib import Path
 from types import ModuleType
 from typing import Never
 
 from . import __version__
-from .config import default_config_path, Config
+from .config import Config, default_config_path
 from .translations import _
 
 logger = logging.getLogger(__name__)
@@ -169,10 +169,13 @@ def parse(
     except ImportError:
         logger.info("jedi: not available")
     try:
-        import watchdog
+        import importlib.util as _ilu
 
-        logger.info("watchdog: available")
-    except ImportError:
+        if _ilu.find_spec("watchdog") is not None:
+            logger.info("watchdog: available")
+        else:
+            logger.info("watchdog: not available")
+    except Exception:
         logger.info("watchdog: not available")
 
     logger.info("environment:")

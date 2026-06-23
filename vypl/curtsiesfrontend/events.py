@@ -5,6 +5,7 @@ from collections.abc import Sequence
 
 import curtsies.events
 
+
 class ReloadEvent(curtsies.events.Event):
     """Request to rerun REPL session ASAP because imported modules changed"""
 

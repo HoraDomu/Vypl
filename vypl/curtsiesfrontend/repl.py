@@ -10,22 +10,24 @@ import sys
 import tempfile
 import time
 import unicodedata
+from collections.abc import Iterable, Sequence
 from enum import Enum
 from types import FrameType, TracebackType
 from typing import (
     Any,
     Literal,
 )
-from collections.abc import Iterable, Sequence
 
 import greenlet
 from curtsies import (
-    FSArray,
-    fmtstr,
     FmtStr,
+    FSArray,
     Termmode,
-    fmtfuncs,
     events,
+    fmtfuncs,
+    fmtstr,
+)
+from curtsies import (
     __version__ as curtsies_version,
 )
 from curtsies.configfile_keynames import keymap as key_dispatch
@@ -36,8 +38,20 @@ from pygments import format as pygformat
 from pygments.formatters import TerminalFormatter
 from pygments.lexers import Python3Lexer
 
-from . import events as vyplevents, sitefix, replpainter as paint
-from ..config import Config
+from .. import __version__
+from ..config import Config, getpreferredencoding
+from ..formatter import VyplFormatter
+from ..line import CHARACTER_PAIR_MAP
+from ..pager import get_pager_command
+from ..repl import (
+    Repl,
+    SourceNotFound,
+)
+from ..translations import _
+from ..vim import VimState
+from . import events as vyplevents
+from . import replpainter as paint
+from . import sitefix
 from .coderunner import (
     CodeRunner,
     FakeOutput,
@@ -49,23 +63,13 @@ from .interpreter import (
     code_finished_will_parse,
 )
 from .manual_readline import (
-    edit_keys,
-    cursor_on_closing_char_pair,
     AbstractEdits,
+    cursor_on_closing_char_pair,
+    edit_keys,
 )
-from .parse import parse as vyplparse, func_for_letter, color_for_letter
+from .parse import color_for_letter, func_for_letter
+from .parse import parse as vyplparse
 from .preprocess import preprocess
-from .. import __version__
-from ..config import getpreferredencoding
-from ..formatter import VyplFormatter
-from ..pager import get_pager_command
-from ..repl import (
-    Repl,
-    SourceNotFound,
-)
-from ..translations import _
-from ..line import CHARACTER_PAIR_MAP
-from ..vim import VimState
 
 logger = logging.getLogger(__name__)
 
@@ -1377,7 +1381,7 @@ class BaseRepl(Repl):
                 + self.current_line_formatted
             )
         elif self.incr_search_mode == SearchMode.INCREMENTAL_SEARCH:
-            return prompt(f"(i-search)`%s': ") + self.current_line_formatted
+            return prompt("(i-search)`%s': ") + self.current_line_formatted
         return (
             prompt(self.ps1) if self.done else more(self.ps2)
         ) + self.current_line_formatted

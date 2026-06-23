@@ -1,5 +1,6 @@
-from typing import IO, Literal
 from types import TracebackType
+from typing import IO, Literal
+
 
 class BaseLock:
     """Base class for file locking"""
@@ -32,8 +33,8 @@ class BaseLock:
             self.release()
 
 try:
-    import fcntl
     import errno
+    import fcntl
 
     class UnixFileLock(BaseLock):
         """Simple file locking for Unix using fcntl"""

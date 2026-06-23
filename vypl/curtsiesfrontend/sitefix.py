@@ -1,5 +1,6 @@
-import sys
 import builtins
+import sys
+
 
 def resetquit(builtins):
     """Redefine builtins 'quit' and 'exit' not so close stdin"""

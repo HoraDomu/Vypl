@@ -1,7 +1,8 @@
 import re
 from collections.abc import Iterator
 from functools import cached_property
-from re import Pattern, Match
+from re import Match, Pattern
+
 
 class LazyReCompile:
     """Compile regular expressions on first use

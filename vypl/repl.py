@@ -12,23 +12,17 @@ import textwrap
 import time
 import traceback
 from abc import abstractmethod
+from collections.abc import Callable, Iterable
 from dataclasses import dataclass
 from itertools import takewhile
 from pathlib import Path
 from types import ModuleType, TracebackType
 from typing import (
-    Any,
-    Dict,
-    List,
-    Literal,
-    Optional,
     TYPE_CHECKING,
-    Tuple,
-    Type,
-    Union,
+    Any,
+    Literal,
     cast,
 )
-from collections.abc import Callable, Iterable
 
 from pygments.lexers import Python3Lexer
 from pygments.token import Token, _TokenType
@@ -40,14 +34,15 @@ except ImportError:
     have_pyperclip = False
 
 from . import autocomplete, inspection, simpleeval
-from .config import getpreferredencoding, Config
+from .config import Config, getpreferredencoding
 from .formatter import Parenthesis
 from .history import History
+from .importcompletion import ModuleGatherer
 from .lazyre import LazyReCompile
-from .paste import PasteHelper, PastePinnwand, PasteFailed
+from .paste import PasteFailed, PasteHelper, PastePinnwand
 from .patch_linecache import filename_for_console_input
 from .translations import _, ngettext
-from .importcompletion import ModuleGatherer
+
 
 class RuntimeTimer:
     """Calculate running time"""
@@ -160,14 +155,14 @@ class Interpreter(code.InteractiveInterpreter):
                 if self.vypl_input_re.match(frame.filename):
                     frame.filename = "<input>"
 
-            l = traceback.format_list(tblist)
-            if l:
-                l.insert(0, "Traceback (most recent call last):\n")
-            l[len(l) :] = traceback.format_exception_only(t, v)
+            lines = traceback.format_list(tblist)
+            if lines:
+                lines.insert(0, "Traceback (most recent call last):\n")
+            lines[len(lines) :] = traceback.format_exception_only(t, v)
         finally:
             pass
 
-        self.writetb(l)
+        self.writetb(lines)
 
     def writetb(self, lines: Iterable[str]) -> None:
         """This outputs the traceback and should be overridden for anything

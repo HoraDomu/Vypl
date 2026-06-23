@@ -11,10 +11,10 @@ makes more sense to you.
 """
 
 import code
-import greenlet
 import logging
 import signal
 
+import greenlet
 from curtsies.input import is_main_thread
 
 logger = logging.getLogger(__name__)
@@ -209,8 +209,8 @@ class FakeOutput:
     def fileno(self):
         return self._real_fileobj.fileno()
 
-    def writelines(self, l):
-        for s in l:
+    def writelines(self, lines):
+        for s in lines:
             self.write(s)
 
     def flush(self):

@@ -5,11 +5,11 @@ Python code, and return None, or a tuple of the start index, end index, and the
 word."""
 
 import re
-
 from dataclasses import dataclass
 from itertools import chain
 
 from .lazyre import LazyReCompile
+
 
 @dataclass
 class LinePart:
@@ -38,7 +38,7 @@ _match_all_dict_keys = r"""[^\]]*"""
 
 _match_single_quote_str_bytes = r"""
     # bytes repr() begins with `b` character; bytes and str begin with `'`
-    b?'             
+    b?'
     # match escape sequence; this handles `\'` in the string repr()
     (?:\\['"nabfrtvxuU\\]|
     # or match any non-`\` and non-single-quote character (most of the string)

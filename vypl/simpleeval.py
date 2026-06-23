@@ -94,7 +94,7 @@ def simple_eval(node_or_string, namespace=None):
             node.op, (ast.UAdd, ast.USub)
         ):
             operand = _convert(node.operand)
-            if not type(operand) in _numeric_types:
+            if type(operand) not in _numeric_types:
                 raise ValueError("unary + and - only allowed on builtin nums")
             if isinstance(node.op, ast.UAdd):
                 return +operand

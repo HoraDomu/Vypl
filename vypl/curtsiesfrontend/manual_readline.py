@@ -11,7 +11,8 @@ from ..line import cursor_on_closing_char_pair
 
 INDENT = 4
 
-getargspec = lambda func: inspect.signature(func).parameters
+def getargspec(func):
+    return inspect.signature(func).parameters
 
 class AbstractEdits:
     default_kwargs = {
@@ -310,7 +311,7 @@ delete_word_from_cursor_back_re = LazyReCompile(r"^|\b\w")
 @edit_keys.on("<Meta-BACKSPACE>")
 @kills_behind
 def delete_word_from_cursor_back(cursor_offset, line):
-    
+
     if not line:
         return cursor_offset, line, ""
     start = None

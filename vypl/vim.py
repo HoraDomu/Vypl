@@ -208,7 +208,9 @@ class VimState:
             repl.status_bar.message("-- NORMAL --", schedule_refresh=False)
             return
 
-        if cmd == "w" or cmd.startswith("w "):
+        if cmd in ("q", "q!", "quit"):
+            raise SystemExit()
+        elif cmd == "w" or cmd.startswith("w "):
             import greenlet as _gl
             parts = cmd.split(None, 1)
             filename = parts[1] if len(parts) > 1 else None

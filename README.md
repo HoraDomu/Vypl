@@ -24,7 +24,7 @@ Vypl is a terminal Python REPL built around the idea that your editor keybinds s
 | Feature | Status |
 |---|---|
 | Syntax highlighting | ✅ |
-| Autocompletion (simple + Jedi) | ✅ |
+| Autocompletion| ✅ |
 | Function signature display | ✅ |
 | Bracket / paren matching | ✅ |
 | Persistent history + reverse search | ✅ |

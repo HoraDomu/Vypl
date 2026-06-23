@@ -16,7 +16,7 @@
 ---
 
 <div align="center">
-  <img src="assets/demo.gif" alt="Vypl demo" width="700" />
+  <img src="assets/demo.gif" alt="Vypl demo" />
 </div>
 
 ---

@@ -137,7 +137,9 @@ class VimState:
         self._pending_reg = '"'
 
     def _load(self) -> str:
-        return self.registers.get(self._pending_reg, "")
+        val = self.registers.get(self._pending_reg, "")
+        self._pending_reg = '"'
+        return val
 
     def enter_normal(self, repl: "BaseRepl") -> None:
         self.mode = VimMode.NORMAL

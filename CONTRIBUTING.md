@@ -47,5 +47,5 @@ This runs ruff on every commit automatically.
 
 ## What to work on
 
-Open issues are tracked on [GitHub](https://github.com/HoraDomu/Vypl/issues).
+Open issues are tracked on [GitHub](https://github.com/HoraDomu/Vypl?tab=contributing-ov-file).
 Good starting points are labelled `good first issue`.

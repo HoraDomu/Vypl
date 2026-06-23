@@ -95,11 +95,7 @@ class StatusBar(Interaction):
             )
         elif e == "<Ctrl-c>":
             raise KeyboardInterrupt()
-        elif e == ":" :
-            self.command_mode = True
-        elif self.command_mode  and e == "q":
-            raise SystemExit()
-        elif self.in_prompt and e in ("\n", "\r", "<Ctrl-j>", "Ctrl-m>"):
+        elif self.in_prompt and e in ("\n", "\r", "<Ctrl-j>", "<Ctrl-m>"):
             line = self._current_line
             self.escape()
             self.request_context.switch(line)

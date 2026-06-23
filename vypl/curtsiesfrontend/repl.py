@@ -652,6 +652,9 @@ class BaseRepl(Repl):
         if self.stdin.has_focus:
             return self.stdin.process_event(e)
 
+        if self.vim.handle(e, self):
+            return
+
         if (
             e
             in (

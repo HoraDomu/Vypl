@@ -18,7 +18,7 @@
 
 ---
 
-Python REPL with Vim modal editing. Syntax highlighting, autocomplete, macros, registers, text objects errthang. If you live in Neovim | Vim , this is your REPL.
+Python REPL with Vim modal editing. Syntax highlighting, autocomplete, macros, registers, text objects the whole shebang. If you live in Neovim | Vim like I do, this is your REPL.
 
 ## Install
 

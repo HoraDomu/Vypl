@@ -7,7 +7,6 @@
   <img src="https://img.shields.io/badge/python-3.11+-2f81f7?style=flat-square&labelColor=0d1117" alt="Python 3.11+" />
   <img src="https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20WSL-2f81f7?style=flat-square&labelColor=0d1117" alt="Platform" />
 </p>
-</a>
 
 </div>
 
@@ -19,15 +18,13 @@
 
 ---
 
-Do you need a ... python repl? Well look no further I have the repl for you. A terminal based repl in pure python for python that features full syntax highligting and even autocomplete :0. But in all seriousness this lightweight repl is easily a repl the more inclided few can reach to wink wink. By inclined few I mean the darkside, Vim users. Yes omg I can finally use my Vim skills in one more place. Features full vim keybinds even modal mode. Same keybinds you use with vim or neovim. Use them here.  
+Python REPL with Vim modal editing. Syntax highlighting, autocomplete, macros, registers, text objects — the works. If you live in Neovim, this is your REPL.
 
 ## Install
 
 ```bash
 pip install vypl
 ```
-
-Or from source:
 
 ```bash
 git clone https://github.com/HoraDomu/Vypl
@@ -41,69 +38,61 @@ pip install -e .
 vypl
 ```
 
-## Vim Features
+## Vim
 
-Press `ESC` to enter normal mode. Press `i`, `a`, `A`, or `I` to return to insert.
+`ESC` → normal mode. `i` / `a` / `A` / `I` → insert.
 
 | Keybind | Action |
 |---|---|
-| `ESC` | Normal mode |
-| `i` / `a` / `A` / `I` | Insert mode |
-| `h` `j` `k` `l` | Move cursor / navigate history |
+| `h` `j` `k` `l` | Move / history |
 | `w` `b` `e` | Word motions |
 | `0` `$` | Line start / end |
-| `f{char}` / `F{char}` | Find character forward / backward |
-| `;` / `,` | Repeat last find / reverse |
-| `r{char}` | Replace character under cursor |
-| `x` | Delete char under cursor |
+| `f{char}` / `F{char}` | Find forward / backward |
+| `;` / `,` | Repeat / reverse find |
+| `r{char}` | Replace char |
+| `x` | Delete char |
 | `d` `c` `y` + motion | Delete / change / yank |
-| `dd` `cc` `yy` | Operate on whole line |
-| `[count]op[count]motion` | e.g. `3dd`, `d3w`, `2x` |
-| `p` `P` | Paste after / before cursor |
-| `"a` … `"z` | Named registers |
-| `v` | Visual mode then `d` / `y` / `c` |
-| `o` / `O` | Open new line below / above |
-| `gg` / `G` | Jump to first / last line in buffer |
-| `K` | Inspect symbol under cursor |
+| `dd` `cc` `yy` | Full line ops |
+| `[count]op[count]motion` | `3dd`, `d3w`, `2x`, etc. |
+| `p` / `P` | Paste after / before |
+| `"a`–`"z` | Named registers |
+| `v` | Visual → `d` / `y` / `c` |
+| `o` / `O` | New line below / above |
+| `gg` / `G` | First / last buffer line |
+| `K` | Inspect symbol |
 | `.` | Repeat last change |
 | `u` | Undo |
-| `q{a-z}` | Record macro into register |
-| `@{a-z}` | Replay macro |
-| `/` | Search history |
-| `n` / `N` | Next / previous search match |
+| `q{a-z}` / `@{a-z}` | Record / replay macro |
+| `/` `n` `N` | Search history |
 
 ### Text Objects
 
-In operator-pending mode (`d`, `c`, `y`), press `i` or `a` followed by a delimiter:
-
-| Object | Description |
+| Object | |
 |---|---|
-| `iw` / `aw` | Inner / around word |
-| `i"` / `a"` | Inner / around double quotes |
-| `i'` / `a'` | Inner / around single quotes |
-| `i(` / `a(` | Inner / around parentheses |
-| `i[` / `a[` | Inner / around brackets |
-| `i{` / `a{` | Inner / around braces |
+| `iw` / `aw` | word |
+| `i"` / `a"` | double quotes |
+| `i'` / `a'` | single quotes |
+| `i(` / `a(` | parens |
+| `i[` / `a[` | brackets |
+| `i{` / `a{` | braces |
 
 ### Ex Commands
 
-Type `:` in normal mode to enter command mode.
+`:` in normal mode.
 
-| Command | Action |
+| Command | |
 |---|---|
-| `:w [file]` | Save session to file |
-| `:r file.py` | Load and run a Python file |
-| `:s/old/new/` | Substitute in current line |
-| `:s/old/new/g` | Substitute all occurrences |
-| `:history` | Search command history |
-| `:clear` | Clear the screen |
+| `:w [file]` | Save session |
+| `:r file.py` | Load and run file |
+| `:s/old/new/` | Substitute |
+| `:s/old/new/g` | Substitute all |
+| `:history` | Command history |
+| `:clear` | Clear screen |
 | `:q` | Quit |
 
 ## Platform
 
-Vypl requires a Unix terminal. On Linux and macOS, it runs natively. On Windows, use WSL or Docker.
-
-## Running on Windows (Docker)
+Unix terminal required. Linux and macOS run natively. Windows → WSL or Docker.
 
 ```bash
 git clone https://github.com/HoraDomu/Vypl
@@ -114,8 +103,8 @@ docker run -it vypl
 
 ## Contributing
 
-Contributions are welcome. Open an issue or pull request on [GitHub](https://github.com/HoraDomu/Vypl). Vypl is licensed under GPL v3 contributions must remain open source.
+Issues and PRs welcome — [github.com/HoraDomu/Vypl](https://github.com/HoraDomu/Vypl). GPL v3 — keep it open.
 
-## Special Thanks
+## Credits
 
-[bpython](https://bpython-interpreter.org/) provided the original REPL foundation. Vypl builds on that core with a complete Vim modal editing layer, a minimal aesthetic, and Docker support.
+Built on [bpython](https://bpython-interpreter.org/). Vypl adds modal editing, a cleaner aesthetic, and Docker support.

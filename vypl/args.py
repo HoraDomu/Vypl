@@ -26,11 +26,14 @@ class RaisingArgumentParser(argparse.ArgumentParser):
 
 
 def version_banner(base: str = "vypl") -> str:
-    return _("{} version {} on top of Python {} {}").format(
-        base,
-        __version__,
-        sys.version.split()[0],
-        sys.executable,
+    py_ver = sys.version.split()[0]
+    exe = sys.executable
+    return (
+        f"\033[1;32m{'─' * 40}\033[0m\n"
+        f"\033[1;32m  Vypl\033[0m \033[2mv{__version__}\033[0m\n"
+        f"\033[2m  Python {py_ver}  {exe}\033[0m\n"
+        f"\033[2m  :q to quit  ESC for normal mode\033[0m\n"
+        f"\033[1;32m{'─' * 40}\033[0m"
     )
 
 

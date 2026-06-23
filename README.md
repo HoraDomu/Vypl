@@ -10,7 +10,9 @@
   <img src="https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20WSL-2f81f7?style=flat-square&labelColor=0d1117" alt="Platform" />
   <a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000?style=flat-square&labelColor=0d1117" alt="Code style: black" /></a>
 </p>
-
+<a href="https://codecov.io/github/HoraDomu/Vypl" > 
+ <img src="https://codecov.io/github/HoraDomu/Vypl/graph/badge.svg?token=S21MLJFZ19"/> 
+ </a>
 </div>
 
 ---

@@ -19,7 +19,7 @@
 
 ---
 
-Vypl is a terminal Python REPL built for Vim users. It gives you a real Python environment with syntax highlighting, smart autocompletion, and full modal editing normal mode, motions, operators, named registers, and ex commands, all inside the REPL.
+Do you need a ... python repl? Well look no further I have the repl for you. A terminal based repl in pure python for python that features full syntax highligting and even autocomplete :0. But in all seriousness this lightweight repl is easily a repl the more inclided few can reach to wink wink. By inclined few I mean the darkside, Vim users. Yes omg I can finally use my Vim skills in one more place. Features full vim keybinds even modal mode. Same keybinds you use with vim or neovim. Use them here.  
 
 ## Install
 

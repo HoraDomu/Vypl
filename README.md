@@ -107,4 +107,4 @@ Issues and PRs welcome ->  [github.com/HoraDomu/Vypl](https://github.com/HoraDom
 
 ## Credits
 
-Built on [bpython](https://bpython-interpreter.org/). Vypl adds modal editing, faster optimzations, more tests, less bloat, a cleaner aesthetic, and Docker support.
+Built on [bpython](https://bpython-interpreter.org/) But I gutted a lot of the code. It was old. Vypl adds essentially the workflow of vim, faster optimzations, more tests, less bloat, a cleaner aesthetic, and Docker support.

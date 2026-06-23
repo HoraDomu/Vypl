@@ -75,7 +75,7 @@ logger = logging.getLogger(__name__)
 
 INCONSISTENT_HISTORY_MSG = "#<---History inconsistent with output shown--->"
 CONTIGUITY_BROKEN_MSG = "#<---History contiguity broken by rewind--->"
-EXAMPLE_CONFIG_URL = "https://raw.githubusercontent.com/dommcpro/Vypl/main/vypl/sample-config"
+EXAMPLE_CONFIG_URL = "https://raw.githubusercontent.com/HoraDomu/Vypl/main/vypl/sample-config"
 EDIT_SESSION_HEADER = """### current vypl session - make changes and save to reevaluate session.
 ### lines beginning with ### will be ignored.
 ### To return to vypl without reevaluating make no changes to this file
@@ -1976,8 +1976,8 @@ class BaseRepl(Repl):
             """
 Thanks for using vypl!
 
-See http://vypl-interpreter.org/ for more information and http://docs.vypl-interpreter.org/ for docs.
-Please report issues at https://github.com/dommcpro/Vypl/issues
+See https://github.com/HoraDomu/Vypl for more information.
+Please report issues at https://github.com/HoraDomu/Vypl/issues
 
 Features:
 Try using undo ({config.undo_key})!

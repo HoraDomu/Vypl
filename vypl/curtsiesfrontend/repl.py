@@ -65,6 +65,7 @@ from ..repl import (
 )
 from ..translations import _
 from ..line import CHARACTER_PAIR_MAP
+from ..vim import VimState
 
 logger = logging.getLogger(__name__)
 
@@ -348,6 +349,7 @@ class BaseRepl(Repl):
         self.formatter = VyplFormatter(config.color_scheme)
 
         self.interact = self.status_bar
+        self.vim = VimState()
 
         self._current_line = ""
 

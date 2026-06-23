@@ -8,6 +8,7 @@ import os
 import re
 import rlcompleter
 import builtins
+import jedi 
 
 from enum import Enum
 from typing import (

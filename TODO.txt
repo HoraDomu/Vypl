@@ -1,0 +1,35 @@
+
+start up build from scratch 
+
+docker build -t vypl .
+
+docker run -it vypl
+
+
+
+then go ahead and check with ruff 
+ruff check . 
+fixx all flagz
+
+
+radon cc . -s -a find complex functions worth making simple 
+
+
+
+idk why this isn't working i think its something to do with my actual python install, ill figure it out 
+cProfile on actual usage paths to find real bottlenecks 
+python -m cProfile -s cumtime main.py
+
+
+
+then optmize 
+
+
+
+then add vim like functionms first 
+
+:q to quit program 
+
+
+
+

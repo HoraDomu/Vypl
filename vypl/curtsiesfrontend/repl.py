@@ -2051,7 +2051,7 @@ Press {config.edit_config_key} to edit this config file.
 
     @property
     def ps1(self):
-        return _process_ps(super().ps1, ">>> ")
+        return _process_ps(super().ps1, ">>>")
 
     @property
     def ps2(self):

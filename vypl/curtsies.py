@@ -222,7 +222,7 @@ def main(
         print(banner)
     if welcome_message is None and not options.quiet and config.help_key:
         welcome_message = (
-            _("Welcome to Vypl!")
+            _("Vypl")
             + " "
             + _("Press <%s> for help.") % config.help_key
         )

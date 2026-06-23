@@ -310,7 +310,7 @@ delete_word_from_cursor_back_re = LazyReCompile(r"^|\b\w")
 @edit_keys.on("<Meta-BACKSPACE>")
 @kills_behind
 def delete_word_from_cursor_back(cursor_offset, line):
-    """Whatever my option-delete does in bash on my mac"""
+    
     if not line:
         return cursor_offset, line, ""
     start = None

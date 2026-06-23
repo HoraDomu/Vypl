@@ -310,7 +310,7 @@ class Config:
             self.left_top_corner,
             self.right_top_corner,
         ) = (
-            ("│", "│", "─", "─", "└", "┘", "┌", "┐")
+            ("│", "│", "─", "─", "╰", "╯", "╭", "╮")
             if self.unicode_box and supports_box_chars()
             else ("|", "|", "-", "-", "+", "+", "+", "+")
         )

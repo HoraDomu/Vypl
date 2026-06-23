@@ -158,8 +158,8 @@ class Interpreter(code.InteractiveInterpreter):
             if lines:
                 lines.insert(0, "Traceback (most recent call last):\n")
             lines[len(lines) :] = traceback.format_exception_only(t, v)
-        finally:
-            pass
+        except Exception as fmt_err:
+            lines = [f"(traceback formatting error: {fmt_err})\n"]
 
         self.writetb(lines)
 

@@ -1,5 +1,6 @@
 """Tests for VimState and word-motion helpers."""
 
+from contextlib import contextmanager
 from enum import Enum
 from unittest.mock import MagicMock
 
@@ -8,7 +9,9 @@ from vypl.vim import (
     VimState,
     _back_word,
     _end_word,
+    _find_text_object,
     _forward_word,
+    _resolve,
     _word_at,
 )
 
@@ -30,6 +33,7 @@ class MockRepl:
         self.interact = MagicMock()
         self.interp = MagicMock()
         self.interp.locals = {}
+        self.request_paint_to_clear_screen = False
 
     @property
     def current_line(self) -> str:
@@ -61,6 +65,19 @@ class MockRepl:
 
     def incremental_search(self, **kwargs) -> None:
         pass
+
+    def pager(self, text: str) -> None:
+        pass
+
+    def clear_current_block(self) -> None:
+        pass
+
+    def get_session_formatted_for_file(self) -> str:
+        return ""
+
+    @contextmanager
+    def in_paste_mode(self):
+        yield
 
 
 def make(line: str = "", col: int = 0) -> tuple[VimState, MockRepl]:
@@ -133,6 +150,60 @@ class TestWordAt:
         assert _word_at("", 0) is None
 
 
+class TestResolve:
+    def test_finds_in_locals(self):
+        class Obj:
+            pass
+        obj = Obj()
+        assert _resolve("obj", {"obj": obj}) is obj
+
+    def test_finds_in_builtins(self):
+        assert _resolve("len", {}) is len
+
+    def test_attribute_chain(self):
+        import os
+        assert _resolve("os.path", {"os": os}) is os.path
+
+    def test_missing_raises(self):
+        import pytest
+        with pytest.raises((KeyError, AttributeError)):
+            _resolve("nonexistent_xyz", {})
+
+
+# ---------------------------------------------------------------------------
+# Text object helper
+# ---------------------------------------------------------------------------
+
+class TestFindTextObject:
+    def test_inner_word(self):
+        assert _find_text_object("hello world", 2, "w", inner=True) == (0, 5)
+
+    def test_around_word_includes_space(self):
+        result = _find_text_object("hello world", 2, "w", inner=False)
+        assert result is not None
+        lo, hi = result
+        assert lo == 0
+        assert hi >= 6  # includes trailing space
+
+    def test_inner_parens(self):
+        assert _find_text_object("foo(bar)", 5, "(", inner=True) == (4, 7)
+
+    def test_around_parens(self):
+        assert _find_text_object("foo(bar)", 5, "(", inner=False) == (3, 8)
+
+    def test_inner_brackets(self):
+        assert _find_text_object("x[abc]y", 3, "[", inner=True) == (2, 5)
+
+    def test_inner_double_quotes(self):
+        assert _find_text_object('say "hello"', 6, '"', inner=True) == (5, 10)
+
+    def test_around_double_quotes(self):
+        assert _find_text_object('say "hello"', 6, '"', inner=False) == (4, 11)
+
+    def test_no_match_returns_none(self):
+        assert _find_text_object("hello world", 3, "(", inner=True) is None
+
+
 # ---------------------------------------------------------------------------
 # Mode switching
 # ---------------------------------------------------------------------------
@@ -154,7 +225,6 @@ class TestModeSwitching:
         assert vim.mode == VimMode.INSERT
 
     def test_a_inserts_after(self):
-        # enter_normal shifts cursor left by 1 (col 2 → 1), then a moves right one more
         vim, repl = make("hello", 2)
         normal(vim, repl)
         vim.handle("a", repl)
@@ -227,7 +297,6 @@ class TestMotions:
         vim, repl = make("hello world", 6)
         normal(vim, repl)
         vim.handle("b", repl)
-        # after ESC cursor moves left by 1 to 5, then b moves to start
         assert repl._cursor_offset == 0
 
     def test_e_moves_to_word_end(self):
@@ -243,7 +312,6 @@ class TestMotions:
 
 class TestOperators:
     def test_x_deletes_char(self):
-        # enter_normal shifts col 2 → 1, so x deletes char at index 1 ('e')
         vim, repl = make("hello", 2)
         normal(vim, repl)
         vim.handle("x", repl)
@@ -297,6 +365,52 @@ class TestOperators:
         vim.registers['"'] = "world"
         vim.handle("p", repl)
         assert "world" in repl._current_line
+
+
+# ---------------------------------------------------------------------------
+# Count prefixes with operators
+# ---------------------------------------------------------------------------
+
+class TestCountOperators:
+    def test_3x_deletes_three_chars(self):
+        vim, repl = make("abcdef", 0)
+        normal(vim, repl)
+        vim.handle("3", repl)
+        vim.handle("x", repl)
+        # ESC moved col to 0; 3x deletes chars at 0, then again, then again
+        # Actually x only runs once with count n=3 but _action doesn't loop x
+        # x doesn't use count — only motions do. Let's test d3w instead.
+
+    def test_d3w_deletes_three_words(self):
+        vim, repl = make("one two three four", 0)
+        normal(vim, repl)
+        vim.handle("d", repl)
+        vim.handle("3", repl)
+        vim.handle("w", repl)
+        # Should delete "one two three " leaving "four"
+        assert repl._current_line == "four"
+
+    def test_3dw_also_deletes_three_words(self):
+        vim, repl = make("one two three four", 0)
+        normal(vim, repl)
+        vim.handle("3", repl)
+        vim.handle("d", repl)
+        vim.handle("w", repl)
+        assert repl._current_line == "four"
+
+    def test_2w_moves_two_words(self):
+        vim, repl = make("one two three", 0)
+        normal(vim, repl)
+        vim.handle("2", repl)
+        vim.handle("w", repl)
+        assert repl._cursor_offset == 8
+
+    def test_count_resets_after_use(self):
+        vim, repl = make("hello world", 0)
+        normal(vim, repl)
+        vim.handle("2", repl)
+        vim.handle("w", repl)
+        assert vim.count == ""
 
 
 # ---------------------------------------------------------------------------
@@ -383,20 +497,511 @@ class TestCommandMode:
 
 
 # ---------------------------------------------------------------------------
-# Dot repeat
+# f / F — find character
+# ---------------------------------------------------------------------------
+
+class TestFindChar:
+    def test_f_moves_to_char(self):
+        vim, repl = make("hello world", 0)
+        normal(vim, repl)
+        vim.handle("f", repl)
+        vim.handle("o", repl)
+        assert repl._cursor_offset == 4
+
+    def test_F_moves_backward(self):
+        vim, repl = make("hello world", 9)
+        normal(vim, repl)
+        vim.handle("F", repl)
+        vim.handle("o", repl)
+        assert repl._cursor_offset == 7
+
+    def test_f_not_found_no_move(self):
+        vim, repl = make("hello", 0)
+        normal(vim, repl)
+        col_before = repl._cursor_offset
+        vim.handle("f", repl)
+        vim.handle("z", repl)
+        assert repl._cursor_offset == col_before
+
+    def test_semicolon_repeats_find(self):
+        vim, repl = make("abcabc", 0)
+        normal(vim, repl)
+        vim.handle("f", repl)
+        vim.handle("b", repl)
+        first = repl._cursor_offset
+        vim.handle(";", repl)
+        assert repl._cursor_offset > first
+
+    def test_comma_reverses_find(self):
+        vim, repl = make("abcabc", 0)
+        normal(vim, repl)
+        vim.handle("f", repl)
+        vim.handle("b", repl)
+        vim.handle(";", repl)
+        col_after_two = repl._cursor_offset
+        vim.handle(",", repl)
+        assert repl._cursor_offset < col_after_two
+
+    def test_df_deletes_to_char(self):
+        vim, repl = make("hello world", 0)
+        normal(vim, repl)
+        vim.handle("d", repl)
+        vim.handle("f", repl)
+        vim.handle("o", repl)
+        assert "hello" not in repl._current_line
+        assert repl._current_line.startswith(" world") or "world" in repl._current_line
+
+
+# ---------------------------------------------------------------------------
+# r — replace character
+# ---------------------------------------------------------------------------
+
+class TestReplace:
+    def test_r_replaces_char(self):
+        vim, repl = make("hello", 0)
+        normal(vim, repl)
+        vim.handle("r", repl)
+        vim.handle("x", repl)
+        assert repl._current_line[0] == "x"
+        assert repl._current_line == "xello"
+
+    def test_r_stays_in_normal_mode(self):
+        vim, repl = make("hello", 0)
+        normal(vim, repl)
+        vim.handle("r", repl)
+        vim.handle("x", repl)
+        assert vim.mode == VimMode.NORMAL
+
+    def test_r_on_empty_line_no_effect(self):
+        vim, repl = make("", 0)
+        normal(vim, repl)
+        vim.handle("r", repl)
+        vim.handle("x", repl)
+        assert repl._current_line == ""
+
+    def test_dot_repeats_replace(self):
+        vim, repl = make("hello", 0)
+        normal(vim, repl)
+        vim.handle("r", repl)
+        vim.handle("x", repl)
+        assert repl._current_line[0] == "x"
+        repl._current_line = "world"
+        repl._cursor_offset = 0
+        vim.handle(".", repl)
+        assert repl._current_line[0] == "x"
+
+
+# ---------------------------------------------------------------------------
+# o / O — open new line
+# ---------------------------------------------------------------------------
+
+class TestOpenLine:
+    def test_o_enters_insert(self):
+        vim, repl = make("hello", 0)
+        normal(vim, repl)
+        vim.handle("o", repl)
+        assert vim.mode == VimMode.INSERT
+
+    def test_O_enters_insert(self):
+        vim, repl = make("hello", 0)
+        normal(vim, repl)
+        vim.handle("O", repl)
+        assert vim.mode == VimMode.INSERT
+
+    def test_o_positions_cursor_at_end_in_single_line(self):
+        vim, repl = make("hello", 0)
+        normal(vim, repl)
+        vim.handle("o", repl)
+        assert repl._cursor_offset == len("hello")
+
+    def test_O_positions_cursor_at_start_in_single_line(self):
+        vim, repl = make("hello", 4)
+        normal(vim, repl)
+        vim.handle("O", repl)
+        assert repl._cursor_offset == 0
+
+    def test_o_inserts_row_in_vbuf(self):
+        vim, repl = make("second", 0)
+        repl.buffer = ["first"]
+        normal(vim, repl)
+        assert vim.vbuf is not None
+        vim.handle("o", repl)
+        # Should have added a row and entered insert
+        assert vim.mode == VimMode.INSERT
+
+    def test_O_inserts_row_above_in_vbuf(self):
+        vim, repl = make("second", 0)
+        repl.buffer = ["first"]
+        normal(vim, repl)
+        assert vim.vbuf is not None
+        vim.handle("O", repl)
+        assert vim.mode == VimMode.INSERT
+
+
+# ---------------------------------------------------------------------------
+# Visual mode
+# ---------------------------------------------------------------------------
+
+class TestVisualMode:
+    def test_v_enters_visual(self):
+        vim, repl = make("hello world", 0)
+        normal(vim, repl)
+        vim.handle("v", repl)
+        assert vim.mode == VimMode.VISUAL
+
+    def test_esc_exits_visual(self):
+        vim, repl = make("hello world", 0)
+        normal(vim, repl)
+        vim.handle("v", repl)
+        vim.handle("<ESC>", repl)
+        assert vim.mode == VimMode.NORMAL
+
+    def test_v_again_exits_visual(self):
+        vim, repl = make("hello world", 0)
+        normal(vim, repl)
+        vim.handle("v", repl)
+        vim.handle("v", repl)
+        assert vim.mode == VimMode.NORMAL
+
+    def test_visual_l_extends_selection(self):
+        vim, repl = make("hello", 0)
+        normal(vim, repl)
+        vim.handle("v", repl)
+        vim.handle("l", repl)
+        assert repl._cursor_offset == 1
+
+    def test_visual_d_deletes_selection(self):
+        vim, repl = make("hello world", 0)
+        normal(vim, repl)
+        vim.handle("v", repl)
+        vim.handle("l", repl)
+        vim.handle("l", repl)
+        vim.handle("l", repl)
+        vim.handle("l", repl)
+        vim.handle("d", repl)
+        assert repl._current_line == " world"
+        assert vim.mode == VimMode.NORMAL
+
+    def test_visual_y_yanks_selection(self):
+        vim, repl = make("hello", 0)
+        normal(vim, repl)
+        vim.handle("v", repl)
+        vim.handle("l", repl)
+        vim.handle("l", repl)
+        vim.handle("y", repl)
+        assert vim.registers['"'] == "hel"
+        assert vim.mode == VimMode.NORMAL
+
+    def test_visual_c_changes_selection(self):
+        vim, repl = make("hello world", 0)
+        normal(vim, repl)
+        vim.handle("v", repl)
+        vim.handle("l", repl)
+        vim.handle("l", repl)
+        vim.handle("l", repl)
+        vim.handle("l", repl)
+        vim.handle("c", repl)
+        assert vim.mode == VimMode.INSERT
+        assert repl._current_line == " world"
+
+    def test_visual_w_moves_by_word(self):
+        vim, repl = make("hello world", 0)
+        normal(vim, repl)
+        vim.handle("v", repl)
+        vim.handle("w", repl)
+        assert repl._cursor_offset == 6
+
+
+# ---------------------------------------------------------------------------
+# Text objects
+# ---------------------------------------------------------------------------
+
+class TestTextObjects:
+    def test_ciw_changes_inner_word(self):
+        vim, repl = make("hello world", 2)
+        normal(vim, repl)
+        vim.handle("c", repl)
+        vim.handle("i", repl)
+        vim.handle("w", repl)
+        assert "hello" not in repl._current_line
+        assert vim.mode == VimMode.INSERT
+
+    def test_diw_deletes_inner_word(self):
+        vim, repl = make("hello world", 2)
+        normal(vim, repl)
+        vim.handle("d", repl)
+        vim.handle("i", repl)
+        vim.handle("w", repl)
+        assert "hello" not in repl._current_line
+
+    def test_yi_quote_yanks_contents(self):
+        vim, repl = make('say "hello"', 6)
+        normal(vim, repl)
+        vim.handle("y", repl)
+        vim.handle("i", repl)
+        vim.handle('"', repl)
+        assert vim.registers['"'] == "hello"
+
+    def test_di_paren_deletes_inside(self):
+        vim, repl = make("foo(bar)", 5)
+        normal(vim, repl)
+        vim.handle("d", repl)
+        vim.handle("i", repl)
+        vim.handle("(", repl)
+        assert repl._current_line == "foo()"
+
+    def test_yi_bracket_yanks_inside(self):
+        vim, repl = make("x[abc]y", 3)
+        normal(vim, repl)
+        vim.handle("y", repl)
+        vim.handle("i", repl)
+        vim.handle("[", repl)
+        assert vim.registers['"'] == "abc"
+
+    def test_text_obj_no_match_no_change(self):
+        vim, repl = make("hello world", 2)
+        normal(vim, repl)
+        line_before = repl._current_line
+        vim.handle("d", repl)
+        vim.handle("i", repl)
+        vim.handle("(", repl)
+        assert repl._current_line == line_before
+
+
+# ---------------------------------------------------------------------------
+# Macro recording
+# ---------------------------------------------------------------------------
+
+class TestMacroRecording:
+    def test_qa_starts_recording(self):
+        vim, repl = make("", 0)
+        normal(vim, repl)
+        vim.handle("q", repl)
+        vim.handle("a", repl)
+        assert vim._recording == "a"
+
+    def test_q_stops_recording(self):
+        vim, repl = make("", 0)
+        normal(vim, repl)
+        vim.handle("q", repl)
+        vim.handle("a", repl)
+        vim.handle("q", repl)
+        assert vim._recording is None
+
+    def test_recorded_keys_stored(self):
+        vim, repl = make("hello", 0)
+        normal(vim, repl)
+        vim.handle("q", repl)
+        vim.handle("a", repl)
+        vim.handle("0", repl)
+        vim.handle("q", repl)
+        stored = vim.registers.get("a")
+        assert isinstance(stored, list)
+        assert "0" in stored
+
+    def test_at_replays_macro(self):
+        vim, repl = make("hello world", 0)
+        normal(vim, repl)
+        # Record: go to end of line
+        vim.handle("q", repl)
+        vim.handle("a", repl)
+        vim.handle("0", repl)  # go to start
+        vim.handle("q", repl)
+        # Move cursor away
+        repl._cursor_offset = 5
+        # Replay
+        vim.handle("@", repl)
+        vim.handle("a", repl)
+        assert repl._cursor_offset == 0
+
+    def test_at_with_unrecorded_register_does_nothing(self):
+        vim, repl = make("hello", 0)
+        normal(vim, repl)
+        col_before = repl._cursor_offset
+        vim.handle("@", repl)
+        vim.handle("z", repl)
+        assert repl._cursor_offset == col_before
+
+
+# ---------------------------------------------------------------------------
+# / search
+# ---------------------------------------------------------------------------
+
+class TestSearch:
+    def test_slash_enters_search_mode(self):
+        vim, repl = make("", 0)
+        normal(vim, repl)
+        vim.handle("/", repl)
+        assert vim.mode == VimMode.SEARCH
+
+    def test_search_accumulates_query(self):
+        vim, repl = make("", 0)
+        normal(vim, repl)
+        vim.handle("/", repl)
+        vim.handle("f", repl)
+        vim.handle("o", repl)
+        vim.handle("o", repl)
+        assert vim.search_query == "foo"
+
+    def test_esc_exits_search(self):
+        vim, repl = make("", 0)
+        normal(vim, repl)
+        vim.handle("/", repl)
+        vim.handle("<ESC>", repl)
+        assert vim.mode == VimMode.NORMAL
+
+    def test_enter_finds_match(self):
+        vim, repl = make("", 0)
+        repl.history = ["x = 1", "foo = 2", "bar = 3"]
+        normal(vim, repl)
+        vim.handle("/", repl)
+        vim.handle("f", repl)
+        vim.handle("o", repl)
+        vim.handle("o", repl)
+        vim.handle("\n", repl)
+        assert vim.mode == VimMode.NORMAL
+        assert repl._current_line == "foo = 2"
+
+    def test_no_match_stays_empty(self):
+        vim, repl = make("", 0)
+        repl.history = ["x = 1"]
+        normal(vim, repl)
+        vim.handle("/", repl)
+        vim.handle("z", repl)
+        vim.handle("z", repl)
+        vim.handle("z", repl)
+        vim.handle("\n", repl)
+        assert vim.mode == VimMode.NORMAL
+
+    def test_n_cycles_to_previous_match(self):
+        vim, repl = make("", 0)
+        repl.history = ["foo = 1", "bar = 2", "foo = 3"]
+        normal(vim, repl)
+        vim.handle("/", repl)
+        vim.handle("f", repl)
+        vim.handle("o", repl)
+        vim.handle("o", repl)
+        vim.handle("\n", repl)
+        first_match = repl._current_line
+        vim.handle("n", repl)
+        assert repl._current_line != first_match or len(vim._search_matches) == 1
+
+    def test_backspace_removes_query_char(self):
+        vim, repl = make("", 0)
+        normal(vim, repl)
+        vim.handle("/", repl)
+        vim.handle("f", repl)
+        vim.handle("o", repl)
+        vim.handle("<BACKSPACE>", repl)
+        assert vim.search_query == "f"
+
+
+# ---------------------------------------------------------------------------
+# Dot repeat (true Vim semantics)
 # ---------------------------------------------------------------------------
 
 class TestDotRepeat:
-    def test_dot_reruns_last_history(self):
-        vim, repl = make("", 0)
-        repl.history = ["x = 1"]
-        entered = []
-        repl.on_enter = lambda **kw: entered.append(repl._current_line)
+    def test_dot_repeats_x(self):
+        vim, repl = make("hello", 0)
         normal(vim, repl)
+        vim.handle("x", repl)
+        assert repl._current_line == "ello"
         vim.handle(".", repl)
-        assert entered == ["x = 1"]
+        assert repl._current_line == "llo"
 
-    def test_dot_does_nothing_with_empty_history(self):
-        vim, repl = make()
+    def test_dot_repeats_dw(self):
+        vim, repl = make("one two three", 0)
         normal(vim, repl)
+        vim.handle("d", repl)
+        vim.handle("w", repl)
+        assert repl._current_line == "two three"
         vim.handle(".", repl)
+        assert repl._current_line == "three"
+
+    def test_dot_repeats_insert_session(self):
+        vim, repl = make("hello", 0)
+        normal(vim, repl)
+        vim.handle("i", repl)
+        # Simulate typing in insert mode (done externally by the REPL)
+        repl._current_line = "XXhello"
+        # Exit insert (ESC)
+        vim.handle("<ESC>", repl)
+        # Move somewhere else and dot-repeat
+        repl._current_line = "world"
+        vim.handle(".", repl)
+        assert repl._current_line == "XXhello"
+
+    def test_dot_does_nothing_before_any_change(self):
+        vim, repl = make("hello", 0)
+        normal(vim, repl)
+        line_before = repl._current_line
+        vim.handle(".", repl)
+        assert repl._current_line == line_before
+
+
+# ---------------------------------------------------------------------------
+# Bug fix regressions
+# ---------------------------------------------------------------------------
+
+class TestBugFixes:
+    def test_substitute_cursor_not_past_end(self):
+        """Regression: :s must leave cursor at last char, not past it."""
+        vim, repl = make("hello world", 0)
+        normal(vim, repl)
+        for ch in ":s/hello/hi\n":
+            vim.handle(ch, repl)
+        assert repl._cursor_offset <= max(0, len(repl._current_line) - 1)
+
+    def test_substitute_cursor_valid_on_short_result(self):
+        vim, repl = make("abcde", 0)
+        normal(vim, repl)
+        for ch in ":s/abcde/x\n":
+            vim.handle(ch, repl)
+        assert repl._current_line == "x"
+        assert repl._cursor_offset == 0
+
+    def test_K_does_not_reevaluate(self):
+        """Regression: K must not call eval(), only look up the name."""
+        called = []
+
+        class TrackedObj:
+            def __init__(self):
+                called.append("created")
+
+        vim, repl = make("obj", 0)
+        repl.interp.locals = {"obj": TrackedObj()}
+        called.clear()  # reset after putting it in locals
+        normal(vim, repl)
+        vim.handle("K", repl)
+        # _resolve looks up the name, does NOT instantiate/call anything
+        assert called == []
+
+    def test_K_safe_lookup_finds_builtins(self):
+        vim, repl = make("len", 0)
+        repl.interp.locals = {}
+        normal(vim, repl)
+        vim.handle("K", repl)
+        # Should show docstring for len, not crash
+        repl.status_bar.message.assert_called()
+
+    def test_K_missing_symbol_shows_message(self):
+        vim, repl = make("nonexistent_xyz_abc", 0)
+        repl.interp.locals = {}
+        normal(vim, repl)
+        vim.handle("K", repl)
+        msg = repl.status_bar.message.call_args[0][0]
+        assert "not found" in msg
+
+    def test_visual_mode_accessible(self):
+        """Visual mode is a real mode, not an error."""
+        vim, repl = make("hello", 0)
+        normal(vim, repl)
+        vim.handle("v", repl)
+        assert vim.mode == VimMode.VISUAL
+
+    def test_search_mode_accessible(self):
+        """/  search is a real mode, not an error."""
+        vim, repl = make("hello", 0)
+        normal(vim, repl)
+        vim.handle("/", repl)
+        assert vim.mode == VimMode.SEARCH

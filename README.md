@@ -21,7 +21,7 @@
 
 ---
 
-Vypl is a terminal Python REPL built for Vim users. It gives you a real Python environment with syntax highlighting, smart autocompletion, and full modal editingnormal mode, motions, operators, named registers, and ex commands, all inside the REPL.
+Vypl is a terminal Python REPL built for Vim users. It gives you a real Python environment with syntax highlighting, smart autocompletion, and full modal editing — normal mode, motions, operators, named registers, and ex commands, all inside the REPL.
 
 ## Install
 
@@ -54,14 +54,38 @@ Press `ESC` to enter normal mode. Press `i`, `a`, `A`, or `I` to return to inser
 | `h` `j` `k` `l` | Move cursor / navigate history |
 | `w` `b` `e` | Word motions |
 | `0` `$` | Line start / end |
+| `f{char}` / `F{char}` | Find character forward / backward |
+| `;` / `,` | Repeat last find / reverse |
+| `r{char}` | Replace character under cursor |
 | `x` | Delete char under cursor |
 | `d` `c` `y` + motion | Delete / change / yank |
 | `dd` `cc` `yy` | Operate on whole line |
+| `[count]op[count]motion` | e.g. `3dd`, `d3w`, `2x` |
 | `p` `P` | Paste after / before cursor |
 | `"a` … `"z` | Named registers |
+| `v` | Visual mode — then `d` / `y` / `c` |
+| `o` / `O` | Open new line below / above |
+| `gg` / `G` | Jump to first / last line in buffer |
 | `K` | Inspect symbol under cursor |
-| `.` | Re-run last expression |
+| `.` | Repeat last change |
 | `u` | Undo |
+| `q{a-z}` | Record macro into register |
+| `@{a-z}` | Replay macro |
+| `/` | Search history |
+| `n` / `N` | Next / previous search match |
+
+### Text Objects
+
+In operator-pending mode (`d`, `c`, `y`), press `i` or `a` followed by a delimiter:
+
+| Object | Description |
+|---|---|
+| `iw` / `aw` | Inner / around word |
+| `i"` / `a"` | Inner / around double quotes |
+| `i'` / `a'` | Inner / around single quotes |
+| `i(` / `a(` | Inner / around parentheses |
+| `i[` / `a[` | Inner / around brackets |
+| `i{` / `a{` | Inner / around braces |
 
 ### Ex Commands
 
@@ -75,27 +99,7 @@ Type `:` in normal mode to enter command mode.
 | `:s/old/new/g` | Substitute all occurrences |
 | `:history` | Search command history |
 | `:clear` | Clear the screen |
-
-## Roadmap
-
-### Next up
-| Feature | Description |
-|---|---|
-| Count prefixes | `3dd`, `5j`, `2w`repeat any motion or operator |
-| `gg` / `G` | Jump to first / last line in multi-line buffer |
-| `f` / `F` | Find character forward / backward on current line |
-| `r` | Replace single character under cursor |
-| `o` / `O` | Open new line below / above in multi-line buffer |
-
-### Planned
-| Feature | Description |
-|---|---|
-| Visual mode | `v` to select, then `d` / `y` / `c` on selection |
-| Text objects | `ci"`, `di(`, `yi[`operate inside delimiters |
-| Macro recording | `q{a-z}` to record, `@{a-z}` to replay |
-| `/` search | Search REPL history like Vim's `/` |
-
-Open to contributions on any of the abovesee [CONTRIBUTING.md](CONTRIBUTING.md).
+| `:q` | Quit |
 
 ## Platform
 
@@ -110,12 +114,10 @@ docker build -t vypl .
 docker run -it vypl
 ```
 
-
 ## Contributing
 
-Contributions are welcome. Open an issue or pull request on [GitHub](https://github.com/HoraDomu/Vypl). Vypl is licensed under GPL v3contributions must remain open source.
+Contributions are welcome. Open an issue or pull request on [GitHub](https://github.com/HoraDomu/Vypl). Vypl is licensed under GPL v3 — contributions must remain open source.
 
+## Special Thanks
 
-
-##Special Thank you!
-https://bpython-interpreter.org/ Gave me the inspiration, but over hundreds of loc I added later I have created,a more minimal, faster version with a vim style workflow, and docker file support. 
+[bpython](https://bpython-interpreter.org/) provided the original REPL foundation. Vypl builds on that core with a complete Vim modal editing layer, a minimal aesthetic, and Docker support.

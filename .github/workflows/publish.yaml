@@ -31,7 +31,4 @@ jobs:
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
 
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5
-            with:
-              token: ${{ secrets.CODECOV_TOKEN }}
+    

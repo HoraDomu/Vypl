@@ -18,7 +18,7 @@
 
 ---
 
-Python REPL with Vim modal editing. Syntax highlighting, autocomplete, macros, registers, text objects — the works. If you live in Neovim, this is your REPL.
+Python REPL with Vim modal editing. Syntax highlighting, autocomplete, macros, registers, text objects errthang. If you live in Neovim | Vim , this is your REPL.
 
 ## Install
 
@@ -103,8 +103,8 @@ docker run -it vypl
 
 ## Contributing
 
-Issues and PRs welcome — [github.com/HoraDomu/Vypl](https://github.com/HoraDomu/Vypl). GPL v3 — keep it open.
+Issues and PRs welcome[github.com/HoraDomu/Vypl](https://github.com/HoraDomu/Vypl). GPL v3keep it open.
 
 ## Credits
 
-Built on [bpython](https://bpython-interpreter.org/). Vypl adds modal editing, a cleaner aesthetic, and Docker support.
+Built on [bpython](https://bpython-interpreter.org/). Vypl adds modal editing, faster optimzations, more tests, less bloat, a cleaner aesthetic, and Docker support.

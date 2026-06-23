@@ -7,7 +7,7 @@
 #   K,     R,    G,     Y,    B,   M,       C,      W,     k
 #   blacK, blue, Green, cyan, red, Magenta, yellow, hite, grey
 # Capital letters represent bold (brighter)
-# Copy to %USERPROFILE%\.bpython\windows.theme and set "color_scheme = windows" in %USERPROFILE%\.bpython\config
+# Copy to %USERPROFILE%\.vypl\windows.theme and set "color_scheme = windows" in %USERPROFILE%\.vypl\config
 
 [syntax]
 keyword = G

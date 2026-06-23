@@ -1,41 +1,21 @@
 <div align="center">
 
-<img src="https://img.shields.io/badge/VYPL-A%20Python%20REPL%20with%20Vim%20Keybinds-white?style=for-the-badge&labelColor=0d1117&color=2f81f7" alt="Vypl" />
-
-<h3>A Python REPL with Vim Keybinds</h3>
+<img src="https://img.shields.io/badge/Vypl-Python%20REPL%20%E2%80%93%20Vim%20Keybinds-white?style=for-the-badge&labelColor=0d1117&color=2f81f7" alt="Vypl" />
 
 <p>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-2f81f7?style=flat-square&labelColor=0d1117" alt="License" /></a>
   <img src="https://img.shields.io/badge/python-3.11+-2f81f7?style=flat-square&labelColor=0d1117" alt="Python 3.11+" />
   <img src="https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20WSL-2f81f7?style=flat-square&labelColor=0d1117" alt="Platform" />
-  <a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000?style=flat-square&labelColor=0d1117" alt="Code style: black" /></a>
 </p>
-<a href="https://codecov.io/github/HoraDomu/Vypl" > 
- <img src="https://codecov.io/github/HoraDomu/Vypl/graph/badge.svg?token=S21MLJFZ19"/> 
- </a>
+<a href="https://codecov.io/github/HoraDomu/Vypl">
+  <img src="https://codecov.io/github/HoraDomu/Vypl/graph/badge.svg?token=S21MLJFZ19" alt="codecov" />
+</a>
+
 </div>
 
 ---
 
-Vypl is a terminal Python REPL built around the idea that your editor keybinds shouldn't disappear the moment you open an interactive session. It runs in the terminal, gives you a real Python environment with syntax highlighting and smart autocompletion, and is being built to work the way Vim users think modal, keyboard-driven, and fast.
-
-## Features
-
-| Feature | Status |
-|---|---|
-| Syntax highlighting | ✅ |
-| Autocompletion| ✅ |
-| Function signature display | ✅ |
-| Bracket / paren matching | ✅ |
-| Persistent history + reverse search | ✅ |
-| Multi-line editing with auto-indent | ✅ |
-| Open session in external editor | ✅ |
-| Auto-reload on file change | ✅ |
-| Color themes | ✅ |
-| Vim normal / insert mode | 🔧 in progress |
-| Vim motions (`w`, `b`, `e`, `0`, `$`) | 🔧 in progress |
-| Vim operators (`d`, `c`, `y`, `p`) | 🔧 in progress |
-| History navigation with `j` / `k` | 🔧 in progress |
+Vypl is a terminal Python REPL built for Vim users. It gives you a real Python environment with syntax highlighting, smart autocompletion, and full modal editing — normal mode, motions, operators, named registers, and ex commands, all inside the REPL.
 
 ## Install
 
@@ -46,7 +26,7 @@ pip install vypl
 Or from source:
 
 ```bash
-git clone https://github.com/dommcpro/Vypl
+git clone https://github.com/HoraDomu/Vypl
 cd Vypl
 pip install -e .
 ```
@@ -56,10 +36,53 @@ pip install -e .
 ```bash
 vypl
 ```
+
+## Vim Features
+
+Press `ESC` to enter normal mode. Press `i`, `a`, `A`, or `I` to return to insert.
+
+| Keybind | Action |
+|---|---|
+| `ESC` | Normal mode |
+| `i` / `a` / `A` / `I` | Insert mode |
+| `h` `j` `k` `l` | Move cursor / navigate history |
+| `w` `b` `e` | Word motions |
+| `0` `$` | Line start / end |
+| `x` | Delete char under cursor |
+| `d` `c` `y` + motion | Delete / change / yank |
+| `dd` `cc` `yy` | Operate on whole line |
+| `p` `P` | Paste after / before cursor |
+| `"a` … `"z` | Named registers |
+| `K` | Inspect symbol under cursor |
+| `.` | Re-run last expression |
+| `u` | Undo |
+
+### Ex Commands
+
+Type `:` in normal mode to enter command mode.
+
+| Command | Action |
+|---|---|
+| `:w [file]` | Save session to file |
+| `:r file.py` | Load and run a Python file |
+| `:s/old/new/` | Substitute in current line |
+| `:s/old/new/g` | Substitute all occurrences |
+| `:history` | Search command history |
+| `:clear` | Clear the screen |
+
 ## Platform
 
-Vypl requires a Unix terminal. On Windows, run it inside WSL, or Docker. 
+Vypl requires a Unix terminal. On Linux and macOS, it runs natively. On Windows, use WSL or Docker.
+
+## Running on Windows (Docker)
+
+```bash
+git clone https://github.com/HoraDomu/Vypl
+cd Vypl
+docker build -t vypl .
+docker run -it vypl
+```
 
 ## Contributing
 
-See [LICENSE](LICENSE) contributions are welcome, attribution is required, and modifications must be contributed back.
+Contributions are welcome. Open an issue or pull request on [GitHub](https://github.com/HoraDomu/Vypl). See [LICENSE](LICENSE) for terms.

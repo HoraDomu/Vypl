@@ -63,7 +63,7 @@ def _end_word(line: str, col: int) -> int:
 
 def _word_at(line: str, col: int) -> str | None:
     for m in re.finditer(r"\w+", line):
-        if m.start() <= col <= m.end():
+        if m.start() <= col < m.end():
             return m.group()
     return None
 

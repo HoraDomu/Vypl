@@ -1,15 +1,41 @@
-dist/*
-bpython.egg-info/*
+# build
+dist/
+build/
+*.egg-info/
+*.egg
+
+# python
+__pycache__/
 *.pyc
-tags
-_trial_temp
-*.mo
-build/*
-env
-.DS_Store
+*.pyo
+*.pyd
+
+# generated version file
+vypl/_version.py
+
+# testing
+.coverage
+coverage.xml
+.pytest_cache/
+htmlcov/
+
+# type checking
+.mypy_cache/
+
+# linting
+.ruff_cache/
+
+# editors
 .idea/
-doc/sphinx/build/*
-bpython/_version.py
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# env
+env/
 venv/
 .venv/
-.mypy_cache/
+
+# docs build (not the docs/ source folder)
+doc/sphinx/build/

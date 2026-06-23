@@ -20,6 +20,12 @@ Vypl is a terminal Python REPL built for Vim users. It gives you a real Python e
 ## Install
 
 ```bash
+pip install vypl
+```
+
+Or from source:
+
+```bash
 git clone https://github.com/HoraDomu/Vypl
 cd Vypl
 pip install -e .

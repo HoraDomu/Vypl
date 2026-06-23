@@ -1,12 +1,7 @@
 import os.path
 from typing import Any
 
-try:
-    from ._version import __version__ as version
-except ImportError:
-    version = "unknown"
-
-__version__ = version
+__version__ = "0.6.4"
 package_dir = os.path.abspath(os.path.dirname(__file__))
 
 

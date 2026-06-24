@@ -17,6 +17,9 @@
 </div>
 
 ---
+Python REPL with actual Vim modal editing. Not a plugin, not a wrapper just works in the terminal.
+
+
 Ever wanted a Python REPL with Vim modal editing. Syntax highlighting, autocomplete, macros, registers, text objects the whole shebang? Here ya go.
 
 ## Install

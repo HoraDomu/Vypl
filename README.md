@@ -102,11 +102,7 @@ docker run -it vypl
 
 ## Contributing
 
-<<<<<<< HEAD
 Contributions are welcome. Open an issue or pull request on [GitHub](https://github.com/HoraDomu/Vypl). By submitting a contribution you agree to the [Contributor License Agreement](CLA.md). Vypl is licensed under the [Elastic License 2.0](LICENSE) — you may not sell, white-label, or host it as a managed service.
-=======
-Issues and PRs welcome ->  [github.com/HoraDomu/Vypl](https://github.com/HoraDomu/Vypl/blob/main/CONTRIBUTING.md). GPL v3keep it open.
->>>>>>> 63a03bca3337aca2bdf4b49608bdcfb5c0c2b8df
 
 ## Credits
 

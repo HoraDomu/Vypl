@@ -13,7 +13,7 @@
 ---
 
 <div align="center">
-  <img src="assets\bettergifvypl.gif" alt="Vypl demo" />
+  <img src="assets/bettergifvypl.gif" alt="Vypl demo" />
 </div>
 
 ---

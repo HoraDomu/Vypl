@@ -1,210 +1,98 @@
-GNU GENERAL PUBLIC LICENSE
-Version 3, 29 June 2007
+Elastic License 2.0
 
 Copyright (C) 2026 Dominick Yanez
 
-Everyone is permitted to copy and distribute verbatim copies of this license
-document, but changing it is not allowed.
+SPDX short identifier: Elastic-2.0
 
-                        PREAMBLE
+## Acceptance
 
-The GNU General Public License is a free, copyleft license for software and
-other kinds of works.
+By using the software, you agree to all of the terms and conditions below.
 
-When we speak of free software, we are referring to freedom, not price. Our
-General Public Licenses are designed to make sure that you have the freedom
-to share and change all versions of a program--to make sure it remains free
-software for all its users.
+## Copyright License
 
-To protect your rights, we need to prevent others from denying you these
-rights or asking you to surrender the rights. Therefore, you have certain
-responsibilities if you distribute copies of the software, or if you modify
-it: responsibilities to respect the freedom of others.
+The licensor grants you a non-exclusive, royalty-free, worldwide,
+non-sublicensable, non-transferable license to use, copy, distribute,
+make available, and prepare derivative works of the software, in each
+case subject to the limitations and conditions below.
 
-For the developers' and authors' protection, the GPL clearly explains that
-there is no warranty for this free software. For both users' and authors'
-sake, the GPL requires that modified versions be marked as changed, so that
-their problems will not be attributed erroneously to authors of previous
-versions.
+## Limitations
 
-                     TERMS AND CONDITIONS
+You may not provide the software to third parties as a hosted or managed
+service, where the service provides users with access to any substantial
+set of the features or functionality of the software.
 
-0. Definitions.
+You may not move, change, disable, or circumvent the license key
+functionality in the software, and you may not remove or obscure any
+functionality in the software that is protected by the license key.
 
-"This License" refers to version 3 of the GNU General Public License.
+You may not alter, remove, or obscure any licensing, copyright, or other
+notices of the licensor in the software. Any use of the licensor's
+trademarks is subject to applicable law.
 
-"The Program" refers to any copyrightable work licensed under this License.
-Each licensee is addressed as "you". "Licensees" and "recipients" may be
-individuals or organizations.
+## Patents
 
-"Modify" means to copy from or adapt all or part of the work in a fashion
-requiring copyright permission, other than the making of an exact copy. The
-resulting work is called a "modified version" of the earlier work or a work
-"based on" the earlier work.
+The licensor grants you a license, under any patent claims the licensor
+can license, or becomes able to license, to make, have made, use, sell,
+offer for sale, import and have imported the software, in each case
+subject to the limitations and conditions in this license. This license
+does not cover any patent claims that you cause to be infringed by
+modifications or additions to the software. If you or your company make
+any written claim that the software infringes or contributes to
+infringement of any patent, your patent license for the software granted
+under these terms ends immediately.
 
-"Covered work" means either the unmodified Program or a work based on the
-Program.
+## Notices
 
-1. Source Code.
+You must ensure that anyone who gets a copy of any part of the software
+from you also gets a copy of these terms.
 
-The "source code" for a work means the preferred form of the work for making
-modifications to it. "Object code" means any non-source form of a work.
+If you modify the software, you must include in any modified copies of
+the software prominent notices stating that you have modified the
+software.
 
-2. Basic Permissions.
+## No Other Rights
 
-All rights granted under this License are granted for the term of copyright
-on the Program, and are irrevocable provided the stated conditions are met.
-This License explicitly affirms your unlimited permission to run the
-unmodified Program.
+These terms do not imply any licenses other than those expressly granted
+in these terms.
 
-3. Protecting Users' Legal Rights From Anti-Circumvention Law.
+## Termination
 
-No covered work shall be deemed part of an effective technological measure
-under any applicable law fulfilling obligations under article 11 of the WIPO
-copyright treaty adopted on 20 December 1996, or similar laws prohibiting or
-restricting circumvention of such measures.
+If you use the software in violation of these terms, such use is not
+licensed, and your licenses will automatically terminate. If the licensor
+provides you with a notice of your violation, and you cease all
+violation of this license no later than 30 days after you receive that
+notice, your licenses will be reinstated retroactively. However, if you
+violate these terms after such reinstatement, any additional violation
+of these terms will cause your licenses to terminate automatically and
+permanently.
 
-4. Conveying Verbatim Copies.
+## No Liability
 
-You may convey verbatim copies of the Program's source code as you receive
-it, in any medium, provided that you conspicuously and appropriately publish
-on each copy an appropriate copyright notice; keep intact all notices stating
-that this License applies to the code; keep intact all notices of the absence
-of any warranty; and give all recipients a copy of this License along with
-the Program.
+As far as the law allows, the software comes as is, without any warranty
+or condition, and the licensor will not be liable to you for any damages
+arising out of these terms or the use or nature of the software, under
+any kind of legal claim.
 
-5. Conveying Modified Source Versions.
+## Definitions
 
-You may convey a work based on the Program, or the modifications to produce
-it from the Program, in the form of source code under the terms of section 4,
-provided that you also meet all of these conditions:
+The "licensor" is Dominick Yanez, the individual offering these terms.
 
-  a) The work must carry prominent notices stating that you modified it, and
-     giving a relevant date.
+The "software" is the Vypl project that the licensor makes available
+under these terms, including any portion of it.
 
-  b) The work must carry prominent notices stating that it is released under
-     this License and any conditions added under section 7. This requirement
-     modifies the requirement in section 4 to "keep intact all notices".
+"You" refers to the individual or entity agreeing to these terms.
 
-  c) You must license the entire work, as a whole, under this License to
-     anyone who comes into possession of a copy. This License will therefore
-     apply, along with any applicable section 7 additional terms, to the
-     whole of the work, and all its parts, regardless of how they are
-     packaged.
+"Your company" is any legal entity, sole proprietorship, or other kind
+of organization that you work for, plus all organizations that have
+control over, are under the control of, or are under common control with
+that organization. "Control" means ownership of substantially all the
+assets of an entity, or the power to direct its management and legal
+affairs.
 
-  d) If the work has interactive user interfaces, each must display
-     Appropriate Legal Notices; however, if the Program has interactive
-     interfaces that do not display Appropriate Legal Notices, your work
-     need not make them do so.
+"Your licenses" are all the licenses granted to you for the software
+under these terms.
 
-6. Conveying Non-Source Forms.
+"Use" includes copying, distributing, making available, modifying and,
+in some cases, running the software.
 
-You may convey a covered work in object code form under the terms of sections
-4 and 5, provided that you also convey the machine-readable Corresponding
-Source under the terms of this License, in one of these ways:
-
-  a) Convey the object code in, or embodied in, a physical product,
-     accompanied by the Corresponding Source fixed on a durable physical
-     medium customarily used for software interchange.
-
-  b) Convey the object code in an individual network server, with the
-     Corresponding Source accessible at no charge.
-
-7. Additional Terms.
-
-"Additional permissions" are terms that supplement the terms of this License
-by making exceptions from one or more of its conditions. You may place
-additional permissions on material, added by you to a covered work, for which
-you have or can give appropriate copyright permission.
-
-  a) Disclaiming warranty or limiting liability differently from the terms of
-     sections 15 and 16 of this License; or
-
-  b) Requiring preservation of specified reasonable legal notices or author
-     attributions in that material or in the Appropriate Legal Notices
-     displayed by works containing it; or
-
-  c) Prohibiting misrepresentation of the origin of that material, or
-     requiring that modified versions of such material be marked in reasonable
-     ways as different from the original version.
-
-8. Termination.
-
-You may not propagate or modify a covered work except as expressly provided
-under this License. Any attempt otherwise to propagate or modify it is void,
-and will automatically terminate your rights under this License.
-
-9. Acceptance Not Required for Having Copies.
-
-You are not required to accept this License in order to receive or run a copy
-of the Program.
-
-10. Automatic Licensing of Downstream Recipients.
-
-Each time you convey a covered work, the recipient automatically receives a
-license from the original licensors, to run, modify and propagate that work,
-subject to this License.
-
-11. No Surrender of Others' Freedom.
-
-If conditions are imposed on you that contradict the conditions of this
-License, they do not excuse you from the conditions of this License.
-
-12. Use with the GNU Affero General Public License.
-
-Notwithstanding any other provision of this License, you have permission to
-link or combine any covered work with a work licensed under version 3 of the
-GNU Affero General Public License into a single combined work, and to convey
-the resulting work.
-
-13. Revised Versions of this License.
-
-The Free Software Foundation may publish revised and/or new versions of the
-GNU General Public License from time to time. Such new versions will be
-similar in spirit to the present version, but may address new problems or
-concerns.
-
-14. Disclaimer of Warranty.
-
-THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE
-LAW. EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR
-OTHER PARTIES PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY KIND,
-EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE
-ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU.
-
-15. Limitation of Liability.
-
-IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL
-ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MODIFIES AND/OR CONVEYS THE
-PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY
-GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE
-OR INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR
-DATA BEING RENDERED INACCURATE OR RESULTS PRODUCED BY THE PROGRAM FAILING TO
-RUN WITH ANY OTHER PROGRAMS), EVEN IF SUCH A HOLDER OR OTHER PARTY HAS BEEN
-ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-
-                     END OF TERMS AND CONDITIONS
-
-How to Apply These Terms to Your New Programs
-
-To apply these terms, attach the following notices to the program. It is
-safest to attach them to the start of each source file to state the exclusion
-of warranty; and each file should have at least the "copyright" line and a
-pointer to where the full notice is found.
-
-    Vypl - A Python REPL with Vim Keybinds
-    Copyright (C) 2026 Dominick Yanez
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program. If not, see <https://www.gnu.org/licenses/>.
+"Trademark" means trademarks, service marks, and similar rights.

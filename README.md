@@ -3,7 +3,7 @@
 <img src="https://img.shields.io/badge/Vypl-Python%20REPL%20%E2%80%93%20Vim%20Keybinds-white?style=for-the-badge&labelColor=0d1117&color=2f81f7" alt="Vypl" />
 
 <p>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0-2f81f7?style=flat-square&labelColor=0d1117" alt="License" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Elastic--2.0-2f81f7?style=flat-square&labelColor=0d1117" alt="License" /></a>
   <img src="https://img.shields.io/badge/python-3.11+-2f81f7?style=flat-square&labelColor=0d1117" alt="Python 3.11+" />
   <img src="https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20WSL-2f81f7?style=flat-square&labelColor=0d1117" alt="Platform" />
 </p>
@@ -114,7 +114,7 @@ docker run -it vypl
 
 ## Contributing
 
-Contributions are welcome. Open an issue or pull request on [GitHub](https://github.com/HoraDomu/Vypl). Vypl is licensed under GPL v3 contributions must remain open source.
+Contributions are welcome. Open an issue or pull request on [GitHub](https://github.com/HoraDomu/Vypl). By submitting a contribution you agree to the [Contributor License Agreement](CLA.md). Vypl is licensed under the [Elastic License 2.0](LICENSE) — you may not sell, white-label, or host it as a managed service.
 
 ## Special Thanks
 

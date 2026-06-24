@@ -17,7 +17,7 @@
 </div>
 
 ---
-Ever want at Python REPL with Vim modal editing. Syntax highlighting, autocomplete, macros, registers, text objects the whole shebang? Here ya go.
+Ever wanted a Python REPL with Vim modal editing. Syntax highlighting, autocomplete, macros, registers, text objects the whole shebang? Here ya go.
 
 ## Install
 
